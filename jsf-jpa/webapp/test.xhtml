@@ -1,0 +1,17 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+                
+	<ui:define name="header">
+		Test
+	</ui:define>
+	
+	<p:fieldset legend="Artikel anlegen" style="margin-bottom:20px">
+		<p:inputText label="Artikelname" value="${articleBean.newArticle.name}"/>
+		<p:commandButton value="Speichern" actionListener="${articleBean.save}" update="messages" />
+	</p:fieldset>
+
+</ui:composition>
