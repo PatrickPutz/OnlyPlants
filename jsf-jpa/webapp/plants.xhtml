@@ -9,11 +9,14 @@
 		Artikel
 	</ui:define>
 	
-	
 	<p:fieldset legend="Artikel anlegen" style="margin-bottom:20px">
 		<p:inputText label="Artikelname" value="${articleBean.newArticle.name}"/>
 		<p:commandButton value="Speichern" actionListener="${articleBean.save}" update="messages,articleList" />
 	</p:fieldset>
+
+
+
+
 
 	<p:dataTable id="articleList" value="#{articleBean.articleList}" var="article">
 		<p:column>
@@ -29,11 +32,5 @@
 			<h:outputText value="#{article.name}"></h:outputText>
 		</p:column>
 	</p:dataTable>
-	
-	<ul>
-		<li>
-			<h:link value="Plants" outcome="plants.xhtml"/>
-		</li>
-	</ul>
 	
 </ui:composition>
