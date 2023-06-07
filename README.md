@@ -1,6 +1,9 @@
-# Campus02 - BPJ02 Repository
+# OnlyPlants
+## by Leo Tanner & Patrick Putz
 
-## JSF - JPA Sample project
+After starting the Apache Tomcat server in Eclipse, navigate to the [OnlyPlants Web Application](http://localhost:8080/bp2/).
+
+## Based on the JSF - JPA sample project which has been provided to us by our lecturers
 
 This project demonstrates how to interact with a database (CRUD) in the context of a web application.
 
@@ -31,9 +34,9 @@ The following components are used - you do not need to download them
   * Right click - Debug
 
 Tomcat will be listening on port 8080.
-* Open your browser and navigate to the [BP2 project start page](http://localhost:8080/bp2/)
+* Open your browser and navigate to the [OnlyPlants project start page](http://localhost:8080/bp2/)
 
-## Fruther reading
+## Further reading
 
 A great resource for JSF is
 * [JSF at work](http://jsfatwork.irian.at/book_de/introduction.html)
