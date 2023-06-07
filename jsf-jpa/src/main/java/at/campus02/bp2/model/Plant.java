@@ -23,6 +23,30 @@ public class Plant implements Serializable{
 	private String description;
 	private ArrayList<Demand> demands;
 
+	public void addDemand(Demand demand){
+		demands.add(demand);
+	}
+
+	public void removeDemand(Demand demand){
+		demands.remove(demand);
+	}
+
+	public ArrayList<Demand> getDemands() {
+		return demands;
+	}
+
+	public void setDemands(ArrayList<Demand> demands) {
+		this.demands = demands;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
