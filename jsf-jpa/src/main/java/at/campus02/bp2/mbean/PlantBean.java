@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import at.campus02.bp2.model.Article;
+import at.campus02.bp2.model.Plant;
 import at.campus02.bp2.utils.EntityManagerFactoryProvider;
 
 @ManagedBean
@@ -39,7 +40,7 @@ public class PlantBean {
     }
 
     public void loadPlantsFromDB() {
-        articleList = entityManager.createQuery("from Plant", Plant.class).getResultList();
+        plantList = entityManager.createQuery("from Plant", Plant.class).getResultList();
     }
 
     public void save() {

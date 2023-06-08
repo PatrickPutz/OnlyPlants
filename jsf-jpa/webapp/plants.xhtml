@@ -6,30 +6,27 @@
                 template="/WEB-INF/template.xhtml">
                 
 	<ui:define name="header">
-		Artikel
+		Pflanze
 	</ui:define>
 	
-	<p:fieldset legend="Artikel anlegen" style="margin-bottom:20px">
-		<p:inputText label="Artikelname" value="${articleBean.newArticle.name}"/>
-		<p:commandButton value="Speichern" actionListener="${articleBean.save}" update="messages,articleList" />
+
+	<p:fieldset legend="Pflanze anlegen" style="margin-bottom:20px">
+		<p:inputText label="Pflanzenname" value="${plantBean.newPlant.name}"/>
+		<p:commandButton value="Speichern" actionListener="${plantBean.save}" update="messages,plantList" />
 	</p:fieldset>
 
-
-
-
-
-	<p:dataTable id="articleList" value="#{articleBean.articleList}" var="article">
+	<p:dataTable id="plantList" value="#{plantBean.plantList}" var="plant">
 		<p:column>
 			<f:facet name="header">
-				<h:outputText value="Artikelnummer"></h:outputText>
+				<h:outputText value="Pflanzennummer"></h:outputText>
 			</f:facet>
-			<h:outputText value="#{article.id}"></h:outputText>
+			<h:outputText value="#{plant.id}"></h:outputText>
 		</p:column>
 		<p:column>
 			<f:facet name="header">
 				<h:outputText value="Bezeichnung"></h:outputText>
 			</f:facet>
-			<h:outputText value="#{article.name}"></h:outputText>
+			<h:outputText value="#{plant.name}"></h:outputText>
 		</p:column>
 	</p:dataTable>
 	
