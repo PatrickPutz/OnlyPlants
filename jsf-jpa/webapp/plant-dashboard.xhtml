@@ -9,13 +9,18 @@
     </ui:define>
 
     <p:menuButton value="Hinzufügen" buttonStyleClass="ui-button-outlined" buttonStyle="border-radius: 0 1rem">
-    <p:menuitem value="Pflanze" icon="pi pi-filter"/>
-    <p:menuitem value="Ort" icon="pi pi-flag"/>
+        <p:menuitem value="Pflanze" icon="pi pi-filter"/>
+        <p:menuitem value="Ort" icon="pi pi-flag"/>
     </p:menuButton>
     <p></p>
 
     <p:accordionPanel multiple="true" value="#{categoryBean.categoryList}" var="category">
         <p:tab title="#{category.name}">
+            <f:facet name="actions">
+                    <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
+                        <h:outputText styleClass="ui-icon pi pi-pencil" />
+                    </p:commandLink>
+                </f:facet>
             <p class="m-0">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
@@ -26,9 +31,9 @@
     <p:accordionPanel multiple="true">
         <p:tab title="Settings">
             <p:menuButton value="Hinzufügen" buttonStyleClass="ui-button-outlined" buttonStyle="border-radius: 0 1rem">
-            <p:menuitem value="Pflanze" icon="pi pi-filter"/>
-            <p:menuitem value="Ort" icon="pi pi-flag"/>
-        </p:menuButton>
+                <p:menuitem value="Pflanze" icon="pi pi-filter"/>
+                <p:menuitem value="Ort" icon="pi pi-flag"/>
+            </p:menuButton>
         </p:tab>
     </p:accordionPanel>
 
