@@ -6,27 +6,41 @@
                 template="/WEB-INF/template.xhtml">
                 
 	<ui:define name="header">
-		Pflanze
+		Pflanzen
 	</ui:define>
 	
 
 	<p:fieldset legend="Pflanze anlegen" style="margin-bottom:20px">
-		<p:inputText label="Pflanzenname" value="${plantBean.newPlant.name}"/>
+		<p:inputText label="Pflanzenname" placeholder="Pflanzenname" value="${plantBean.newPlant.name}"/>
+		<p:inputText label="Pflanzentyp" placeholder="Pflanzentyp" value="${plantBean.newPlant.type}"/>
+		<p:inputText label="Beschreibung" placeholder="Beschreibung" value="${plantBean.newPlant.description}"/>
 		<p:commandButton value="Speichern" actionListener="${plantBean.save}" update="messages,plantList" />
 	</p:fieldset>
 
 	<p:dataTable id="plantList" value="#{plantBean.plantList}" var="plant">
 		<p:column>
 			<f:facet name="header">
-				<h:outputText value="Pflanzennummer"></h:outputText>
+				<h:outputText value="Nr."></h:outputText>
 			</f:facet>
 			<h:outputText value="#{plant.id}"></h:outputText>
 		</p:column>
 		<p:column>
 			<f:facet name="header">
-				<h:outputText value="Bezeichnung"></h:outputText>
+				<h:outputText value="Name"></h:outputText>
 			</f:facet>
 			<h:outputText value="#{plant.name}"></h:outputText>
+		</p:column>
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="Typ"></h:outputText>
+			</f:facet>
+			<h:outputText value="#{plant.type}"></h:outputText>
+		</p:column>
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="Beschreibung"></h:outputText>
+			</f:facet>
+			<h:outputText value="#{plant.description}"></h:outputText>
 		</p:column>
 	</p:dataTable>
 	
