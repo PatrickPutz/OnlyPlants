@@ -8,6 +8,12 @@
         Plant Dashboard
     </ui:define>
 
+    <p:menuButton value="Hinzufügen" buttonStyleClass="ui-button-outlined" buttonStyle="border-radius: 0 1rem">
+    <p:menuitem value="Pflanze" icon="pi pi-filter"/>
+    <p:menuitem value="Ort" icon="pi pi-flag"/>
+    </p:menuButton>
+    <p></p>
+
     <p:accordionPanel multiple="true" value="#{categoryBean.categoryList}" var="category">
         <p:tab title="#{category.name}">
             <p class="m-0">
@@ -15,6 +21,14 @@
                 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
                 dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
+        </p:tab>
+    </p:accordionPanel>
+    <p:accordionPanel multiple="true">
+        <p:tab title="Settings">
+            <p:menuButton value="Hinzufügen" buttonStyleClass="ui-button-outlined" buttonStyle="border-radius: 0 1rem">
+            <p:menuitem value="Pflanze" icon="pi pi-filter"/>
+            <p:menuitem value="Ort" icon="pi pi-flag"/>
+        </p:menuButton>
         </p:tab>
     </p:accordionPanel>
 
