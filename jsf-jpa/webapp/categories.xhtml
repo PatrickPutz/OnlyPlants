@@ -11,10 +11,10 @@
 
     <p:fieldset legend="Kategorie oder Ort anlegen" style="margin-bottom:20px">
 		<p:inputText label="Kategorie" placeholder="Kategorie oder Ort" value="${categoryBean.newCategory.name}"/>
-		<p:commandButton value="Speichern" actionListener="${categoryBean.save}" update="messages,categoryList" />
+		<p:commandButton value="Speichern" actionListener="${categoryBean.save}" update="categoryList" />
 	</p:fieldset>
 
-    
+    <!--  
 	<p:dataTable id="categoryList" value="#{categoryBean.categoryList}" var="category">
 		<p:column>
 			<f:facet name="header">
@@ -23,5 +23,25 @@
 			<h:outputText value="#{category.name}"></h:outputText>
 		</p:column>
     </p:dataTable>
-
+    -->
+    
+    <p:dataTable id="categoryList" value="#{categoryBean.categoryList}" var="category">
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="ID"></h:outputText>
+			</f:facet>
+			<h:outputText value="#{category.id}"></h:outputText>
+		</p:column>
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="Kategorien und Orte"></h:outputText>
+			</f:facet>
+			<h:outputText value="#{category.name}"></h:outputText>
+		</p:column>
+		<p:column>
+			<p:inputText label="edited" placeholder="Neue Bezeichnung" value="${categoryBean.newCategoryName}"/>
+			<p:commandButton value="Speichern" actionListener="${categoryBean.updateCategory(category, edited)}" update="categoryList"/>
+		</p:column>
+    </p:dataTable>
+    
 </ui:composition>

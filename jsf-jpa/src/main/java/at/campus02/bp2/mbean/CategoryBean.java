@@ -46,7 +46,7 @@ public class CategoryBean {
     
     // Update a saved Category
     
-    public void updateCategory() {
+    public void update() {
         if(selectedCategory != null) {
         	selectedCategory.setName(getNewCategoryName());
         	EntityTransaction transaction = entityManager.getTransaction();
@@ -55,6 +55,12 @@ public class CategoryBean {
             transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Kategorie " + getSelectedCategory().getName() + " wurde aktualisiert"));
         }
+    }
+    
+    public void updateCategory(Category selectedCategory, String newCategoryName) {
+    	setSelectedCategory(selectedCategory);
+    	setNewCategoryName(newCategoryName);
+    	update();
     }
     
     // Load saved Categories from Database
@@ -89,7 +95,7 @@ public class CategoryBean {
     
     public void handleDialogClose() {
     	if(dialogDirty) {
-    		updateCategory();
+    		update();
     	}
     	unselectCategory();
     }
