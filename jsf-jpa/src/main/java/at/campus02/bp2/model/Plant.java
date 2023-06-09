@@ -32,6 +32,8 @@ public class Plant implements Serializable{
 		demands.remove(demand);
 	}
 
+	// Getter and Setter Methods
+	
 	public ArrayList<Demand> getDemands() {
 		return demands;
 	}

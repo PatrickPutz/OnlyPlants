@@ -29,6 +29,24 @@ public class PlantBean {
 
     }
 
+    // Save a new Plant
+    
+    public void save() {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.merge(newPlant);
+        transaction.commit();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Pflanze " + newPlant.getName() + " wurde gespeichert"));
+    }
+
+    // Load saved Plants from database
+    
+    public void loadPlantsFromDB() {
+        plantList = entityManager.createQuery("from Plant", Plant.class).getResultList();
+    }
+    
+    // Required Entity Manger Methods
+    
     @PostConstruct
     public void createEntityManager(){
         entityManager = EntityManagerFactoryProvider.get().createEntityManager();
@@ -38,18 +56,8 @@ public class PlantBean {
     public void closeEntityManager() {
         entityManager.close();
     }
-
-    public void loadPlantsFromDB() {
-        plantList = entityManager.createQuery("from Plant", Plant.class).getResultList();
-    }
-
-    public void save() {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.merge(newPlant);
-        transaction.commit();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Pflanze " + newPlant.getName() + " wurde gespeichert"));
-    }
+    
+    // Getter and Setter Methods
 
     public List<Plant> getPlantList(){
         loadPlantsFromDB();
