@@ -30,6 +30,8 @@ public class Category implements Serializable{
 		plants.remove(plant);
 	}
 
+	// Getter and Setter Methods
+	
 	public int getId() {
 		return id;
 	}

@@ -12,7 +12,6 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import at.campus02.bp2.model.Article;
 import at.campus02.bp2.model.Category;
 import at.campus02.bp2.utils.EntityManagerFactoryProvider;
 
@@ -21,9 +20,9 @@ import at.campus02.bp2.utils.EntityManagerFactoryProvider;
 public class CategoryBean {
 
     private EntityManager entityManager;
+    private List<Category> categoryList = new ArrayList<Category>();
 
     private Category newCategory = new Category();
-    private List<Category> categoryList = new ArrayList<Category>();
     private Category selectedCategory;
     private String newCategoryName;
     
@@ -34,6 +33,19 @@ public class CategoryBean {
 
     }
 
+    // Save a new Category
+    
+    public void save() {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.merge(getNewCategory());
+        transaction.commit();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Kategorie " + getNewCategory().getName() + " wurde gespeichert"));
+        setNewCategory(new Category());
+    }
+    
+    // Update a saved Category
+    
     public void updateCategory() {
         if(selectedCategory != null) {
         	selectedCategory.setName(getNewCategoryName());
@@ -45,15 +57,27 @@ public class CategoryBean {
         }
     }
     
+    // Load saved Categories from Database
+    
+    public void loadCategoriesFromDB() {
+    	categoryList = entityManager.createQuery("from Category", Category.class).getResultList();
+    }
+
+    // Load a Category by its ID
+    
+    public Category loadCategoryById(int categoryId) {
+    	return entityManager.find(Category.class, categoryId);
+    }
+    
+    // Select a Category and update dialog booleans
+    
     public void selectCategory(Category category) {
     	setSelectedCategory(loadCategoryById(category.getId()));
     	dialogOpen = true;
     	dialogDirty = false;
     }
     
-    public Category loadCategoryById(int categoryId) {
-    	return entityManager.find(Category.class, categoryId);
-    }
+    // Unselect a Category and update dialog booleans
     
     public void unselectCategory() {
     	setSelectedCategory(null);
@@ -61,12 +85,16 @@ public class CategoryBean {
     	dialogDirty = false;
     }
     
+    // Define what happens when the dialog is closed
+    
     public void handleDialogClose() {
     	if(dialogDirty) {
     		updateCategory();
     	}
     	unselectCategory();
     }
+    
+    // Required Entity Manger Methods
     
     @PostConstruct
     public void createEntityManager(){
@@ -78,19 +106,8 @@ public class CategoryBean {
         entityManager.close();
     }
 
-    public void loadCategoriesFromDB() {
-    	categoryList = entityManager.createQuery("from Category", Category.class).getResultList();
-    }
-
-    public void save() {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.merge(getNewCategory());
-        transaction.commit();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Kategorie " + getNewCategory().getName() + " wurde gespeichert"));
-        setNewCategory(new Category());
-    }
-
+    // Getter and Setter Methods
+    
     public List<Category> getCategoryList(){
     	loadCategoriesFromDB();
         return categoryList;
