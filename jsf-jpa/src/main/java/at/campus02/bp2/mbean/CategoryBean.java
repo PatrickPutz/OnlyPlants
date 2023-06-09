@@ -24,11 +24,20 @@ public class CategoryBean {
 
     private Category newCategory = new Category();
     private List<Category> categoryList = new ArrayList<Category>();
+    private Category selectedCategory;
 
     public CategoryBean(){
 
     }
 
+    public void selectCategory(Category category) {
+    	setSelectedCategory(category);
+    }
+    
+    public void unselectCategory() {
+    	setSelectedCategory(null);
+    }
+    
     @PostConstruct
     public void createEntityManager(){
         entityManager = EntityManagerFactoryProvider.get().createEntityManager();
@@ -66,5 +75,13 @@ public class CategoryBean {
 
 	public void setNewCategory(Category newCategory) {
 		this.newCategory = newCategory;
+	}
+
+	public Category getSelectedCategory() {
+		return selectedCategory;
+	}
+
+	public void setSelectedCategory(Category selectedCategory) {
+		this.selectedCategory = selectedCategory;
 	}
 }
