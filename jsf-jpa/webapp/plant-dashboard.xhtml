@@ -16,11 +16,11 @@
 
     <p:accordionPanel multiple="true" value="#{categoryBean.categoryList}" var="category">
         <p:tab title="#{category.name}">
-            <f:facet name="actions">
-                    <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
-                        <h:outputText styleClass="ui-icon pi pi-pencil" />
-                    </p:commandLink>
-                </f:facet>
+            <f:facet name="actions"> 
+                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" onclick="PF('editcategorydialog').show()">
+                    <h:outputText styleClass="ui-icon pi pi-pencil" />
+                </p:commandLink>
+            </f:facet>
             <p class="m-0">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
@@ -36,5 +36,13 @@
             </p:menuButton>
         </p:tab>
     </p:accordionPanel>
+
+    <p:dialog header="Anpassen" widgetVar="editcategorydialog" minHeight="40" minWidth="350" showEffect="fade" modal="true">
+        <p:inputText label="Kategorie" placeholder="Kategorie" />
+    <f:facet name="footer">
+        <p:commandButton type="button" value="Verwerfen" styleClass="ui-button-flat mr-2" minWidth="10" />
+        <p:commandButton type="button" value="Speichern" minWidth="10"/>
+    </f:facet>
+</p:dialog>
 
 </ui:composition>
