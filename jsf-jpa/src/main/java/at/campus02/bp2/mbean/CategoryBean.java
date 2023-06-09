@@ -25,17 +25,47 @@ public class CategoryBean {
     private Category newCategory = new Category();
     private List<Category> categoryList = new ArrayList<Category>();
     private Category selectedCategory;
+    private String newCategoryName;
+    
+    private boolean dialogOpen = false;
+    private boolean dialogDirty = false;
 
     public CategoryBean(){
 
     }
 
+    public void updateCategory() {
+        if(selectedCategory != null) {
+        	selectedCategory.setName(getNewCategoryName());
+        	EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            entityManager.merge(getSelectedCategory());
+            transaction.commit();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Kategorie " + getSelectedCategory().getName() + " wurde aktualisiert"));
+        }
+    }
+    
     public void selectCategory(Category category) {
-    	setSelectedCategory(category);
+    	setSelectedCategory(loadCategoryById(category.getId()));
+    	dialogOpen = true;
+    	dialogDirty = false;
+    }
+    
+    public Category loadCategoryById(int categoryId) {
+    	return entityManager.find(Category.class, categoryId);
     }
     
     public void unselectCategory() {
     	setSelectedCategory(null);
+    	dialogOpen = false;
+    	dialogDirty = false;
+    }
+    
+    public void handleDialogClose() {
+    	if(dialogDirty) {
+    		updateCategory();
+    	}
+    	unselectCategory();
     }
     
     @PostConstruct
@@ -58,6 +88,7 @@ public class CategoryBean {
         entityManager.merge(getNewCategory());
         transaction.commit();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Kategorie " + getNewCategory().getName() + " wurde gespeichert"));
+        setNewCategory(new Category());
     }
 
     public List<Category> getCategoryList(){
@@ -83,5 +114,13 @@ public class CategoryBean {
 
 	public void setSelectedCategory(Category selectedCategory) {
 		this.selectedCategory = selectedCategory;
+	}
+
+	public String getNewCategoryName() {
+		return newCategoryName;
+	}
+
+	public void setNewCategoryName(String newCategoryName) {
+		this.newCategoryName = newCategoryName;
 	}
 }

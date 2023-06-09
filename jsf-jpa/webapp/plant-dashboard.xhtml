@@ -28,6 +28,7 @@
             </p>
         </p:tab>
     </p:accordionPanel>
+
     <p:accordionPanel multiple="true">
         <p:tab title="Settings">
             <p:menuButton value="Hinzufügen" buttonStyleClass="ui-button-outlined" buttonStyle="border-radius: 0 1rem">
@@ -37,11 +38,11 @@
         </p:tab>
     </p:accordionPanel>
 
-    <p:dialog header="Anpassen" widgetVar="editcategorydialog" minHeight="40" minWidth="350" showEffect="fade" modal="true">
-        <p:inputText label="Kategorie" placeholder="Neue Bezeichnung" />
+    <p:dialog header="Anpassen" widgetVar="editcategorydialog" minHeight="40" minWidth="350" showEffect="fade" modal="true" value="#{categoryBean.categoryList}" var="category" closable="true" onShow="dialogOpen = true;" onHide="handleDialogClose()">
+        <p:inputText label="newcategoryname" placeholder="Neue Bezeichnung" value="#{categoryBean.newCategoryName}" />
     <f:facet name="footer">
-        <p:commandButton type="button" value="Verwerfen" styleClass="ui-button-flat mr-2" minWidth="10" />
-        <p:commandButton type="button" value="Speichern" minWidth="10"/>
+        <p:commandButton type="button" value="Verwerfen" styleClass="ui-button-flat mr-2" minWidth="10" onclick="dialogDirty = false;"/>
+        <p:commandButton type="button" value="Speichern" minWidth="10" onclick="dialogDirty = true;" action="#{categoryBean.updateCategory}" update="messages,categoryList"/>
     </f:facet>
 </p:dialog>
 
