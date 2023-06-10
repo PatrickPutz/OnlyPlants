@@ -103,20 +103,4 @@ public class CategoryBean {
 		this.newCategory = newCategory;
 	}
 
-	public Category getSelectedCategory() {
-		return selectedCategory;
-	}
-
-	public void setSelectedCategory(Category selectedCategory) {
-		this.selectedCategory = selectedCategory;
-	}
-
-	public String getNewCategoryName() {
-		return newCategoryName;
-	}
-
-	public void setNewCategoryName(String newCategoryName) {
-		this.newCategoryName = newCategoryName;
-	}
-
 }
