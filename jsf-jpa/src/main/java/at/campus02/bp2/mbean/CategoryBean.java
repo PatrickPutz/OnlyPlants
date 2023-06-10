@@ -23,8 +23,7 @@ public class CategoryBean {
     private List<Category> categoryList = new ArrayList<Category>();
 
     private Category newCategory = new Category();
-    private Category selectedCategory;
-
+    
     public CategoryBean(){
 
     }
@@ -42,8 +41,12 @@ public class CategoryBean {
     
     // Update a saved Category
     
-    public void updateCategory() {
-    	
+    public void updateCategory(Category category) {
+    	EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.merge(category);
+        transaction.commit();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Kategorie " + getNewCategory().getName() + " wurde gespeichert"));
     }
     
     // Delete a saved Category
@@ -106,6 +109,14 @@ public class CategoryBean {
 
 	public void setSelectedCategory(Category selectedCategory) {
 		this.selectedCategory = selectedCategory;
+	}
+
+	public String getNewCategoryName() {
+		return newCategoryName;
+	}
+
+	public void setNewCategoryName(String newCategoryName) {
+		this.newCategoryName = newCategoryName;
 	}
 
 }

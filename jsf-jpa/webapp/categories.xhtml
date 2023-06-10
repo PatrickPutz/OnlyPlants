@@ -28,8 +28,8 @@
 			<h:outputText value="#{category.name}"></h:outputText>
 		</p:column>
 		<p:column>
-			<p:inputText label="edited" placeholder="Neue Bezeichnung"/>
-			<p:commandButton value="Speichern"/>
+			<p:inputText label="edited" placeholder="Neue Bezeichnung" value="${category.name}"/>
+			<p:commandButton value="Speichern" actionListener="${categoryBean.updateCategory(category)}" update="categoryList"/>
 		</p:column>
 		<p:column>
 	        <f:facet name="header">
