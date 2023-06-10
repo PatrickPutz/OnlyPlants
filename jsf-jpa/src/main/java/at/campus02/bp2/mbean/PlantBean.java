@@ -40,8 +40,12 @@ public class PlantBean {
     
     // Update a saved Plant
     
-    public void updatePlant() {
-    	
+    public void updatePlant(Plant plant) {
+    	EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.merge(plant);
+        transaction.commit();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Pflanze " + plant.getName() + " wurde gespeichert"));
     }
     
     // Delete a saved Plant

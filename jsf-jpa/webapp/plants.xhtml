@@ -43,8 +43,17 @@
 			<h:outputText value="#{plant.description}"></h:outputText>
 		</p:column>
 		<p:column>
+			<f:facet name="header">
+	            <h:outputText value="Bearbeiten" />
+	        </f:facet>
+			<p:inputText label="editedName" placeholder="Neue Bezeichnung" value="${plant.name}"/>
+			<p:inputText label="editedType" placeholder="Neue Bezeichnung" value="${plant.type}"/>
+			<p:inputText label="editedDescription" placeholder="Neue Bezeichnung" value="${plant.description}"/>
+			<p:commandButton value="Speichern" actionListener="${plantBean.updatePlant(plant)}" update="plantList"/>
+		</p:column>
+		<p:column>
 	        <f:facet name="header">
-	            <h:outputText value="Aktionen" />
+	            <h:outputText value="Löschen" />
 	        </f:facet>
 	        <p:commandButton value="Löschen" actionListener="#{plantBean.deletePlant(plant)}" update="plantList" />
     	</p:column>
