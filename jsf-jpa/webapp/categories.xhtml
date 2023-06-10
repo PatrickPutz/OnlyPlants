@@ -13,17 +13,6 @@
 		<p:inputText label="Kategorie" placeholder="Kategorie oder Ort" value="${categoryBean.newCategory.name}"/>
 		<p:commandButton value="Speichern" actionListener="${categoryBean.save}" update="categoryList" />
 	</p:fieldset>
-
-    <!--  
-	<p:dataTable id="categoryList" value="#{categoryBean.categoryList}" var="category">
-		<p:column>
-			<f:facet name="header">
-				<h:outputText value="Kategorien und Orte"></h:outputText>
-			</f:facet>
-			<h:outputText value="#{category.name}"></h:outputText>
-		</p:column>
-    </p:dataTable>
-    -->
     
     <p:dataTable id="categoryList" value="#{categoryBean.categoryList}" var="category">
 		<p:column>
@@ -39,8 +28,8 @@
 			<h:outputText value="#{category.name}"></h:outputText>
 		</p:column>
 		<p:column>
-			<p:inputText label="edited" placeholder="Neue Bezeichnung" value="${categoryBean.newCategoryName}"/>
-			<p:commandButton value="Speichern" actionListener="${categoryBean.updateCategory(category, edited)}" update="categoryList"/>
+			<p:inputText label="edited" placeholder="Neue Bezeichnung"/>
+			<p:commandButton value="Speichern"/>
 		</p:column>
 		<p:column>
 	        <f:facet name="header">

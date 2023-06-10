@@ -38,11 +38,11 @@
         </p:tab>
     </p:accordionPanel>
 
-    <p:dialog header="Anpassen" widgetVar="editcategorydialog" minHeight="40" minWidth="350" showEffect="fade" modal="true" value="#{categoryBean.categoryList}" var="category" closable="true" onShow="dialogOpen = true;" onHide="handleDialogClose()">
-        <p:inputText label="newcategoryname" placeholder="Neue Bezeichnung" value="#{categoryBean.newCategoryName}" />
+    <p:dialog header="Anpassen" widgetVar="editcategorydialog" minHeight="40" minWidth="350" showEffect="fade" modal="true">
+        <p:inputText label="newcategoryname" placeholder="Neue Bezeichnung"/>
     <f:facet name="footer">
-        <p:commandButton type="button" value="Verwerfen" styleClass="ui-button-flat mr-2" minWidth="10" onclick="dialogDirty = false;"/>
-        <p:commandButton type="button" value="Speichern" minWidth="10" onclick="dialogDirty = true;" action="#{categoryBean.updateCategory}" update="messages,categoryList"/>
+        <p:commandButton type="button" value="Verwerfen" styleClass="ui-button-flat mr-2" minWidth="10"/>
+        <p:commandButton type="button" value="Speichern" minWidth="10"/>
     </f:facet>
 </p:dialog>
 

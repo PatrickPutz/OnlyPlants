@@ -24,10 +24,6 @@ public class CategoryBean {
 
     private Category newCategory = new Category();
     private Category selectedCategory;
-    private String newCategoryName;
-    
-    private boolean dialogOpen = false;
-    private boolean dialogDirty = false;
 
     public CategoryBean(){
 
@@ -46,21 +42,8 @@ public class CategoryBean {
     
     // Update a saved Category
     
-    public void update() {
-        if(selectedCategory != null) {
-        	selectedCategory.setName(getNewCategoryName());
-        	EntityTransaction transaction = entityManager.getTransaction();
-            transaction.begin();
-            entityManager.merge(getSelectedCategory());
-            transaction.commit();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Kategorie " + getSelectedCategory().getName() + " wurde aktualisiert"));
-        }
-    }
-    
-    public void updateCategory(Category selectedCategory, String newCategoryName) {
-    	setSelectedCategory(selectedCategory);
-    	setNewCategoryName(newCategoryName);
-    	update();
+    public void updateCategory() {
+    	
     }
     
     // Delete a saved Category
@@ -84,31 +67,6 @@ public class CategoryBean {
     
     public Category loadCategoryById(int categoryId) {
     	return entityManager.find(Category.class, categoryId);
-    }
-    
-    // Select a Category and update dialog booleans
-    
-    public void selectCategory(Category category) {
-    	setSelectedCategory(loadCategoryById(category.getId()));
-    	dialogOpen = true;
-    	dialogDirty = false;
-    }
-    
-    // Unselect a Category and update dialog booleans
-    
-    public void unselectCategory() {
-    	setSelectedCategory(null);
-    	dialogOpen = false;
-    	dialogDirty = false;
-    }
-    
-    // Define what happens when the dialog is closed
-    
-    public void handleDialogClose() {
-    	if(dialogDirty) {
-    		update();
-    	}
-    	unselectCategory();
     }
     
     // Required Entity Manger Methods
@@ -150,11 +108,4 @@ public class CategoryBean {
 		this.selectedCategory = selectedCategory;
 	}
 
-	public String getNewCategoryName() {
-		return newCategoryName;
-	}
-
-	public void setNewCategoryName(String newCategoryName) {
-		this.newCategoryName = newCategoryName;
-	}
 }
