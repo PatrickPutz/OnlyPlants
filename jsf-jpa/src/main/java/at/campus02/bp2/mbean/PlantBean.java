@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import at.campus02.bp2.model.Article;
+import at.campus02.bp2.model.Category;
 import at.campus02.bp2.model.Plant;
 import at.campus02.bp2.utils.EntityManagerFactoryProvider;
 
@@ -37,6 +38,23 @@ public class PlantBean {
         entityManager.merge(newPlant);
         transaction.commit();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Pflanze " + newPlant.getName() + " wurde gespeichert"));
+    }
+    
+    // Update a saved Plant
+    
+    public void updatePlant() {
+    	
+    }
+    
+    // Delete a saved Plant
+    
+    public void deletePlant(Plant plant) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.remove(plant);
+        transaction.commit();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Pflanze " + plant.getName() + " wurde gelöscht"));
+        loadPlantsFromDB();
     }
 
     // Load saved Plants from database

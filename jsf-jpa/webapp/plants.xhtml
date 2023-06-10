@@ -42,6 +42,12 @@
 			</f:facet>
 			<h:outputText value="#{plant.description}"></h:outputText>
 		</p:column>
+		<p:column>
+	        <f:facet name="header">
+	            <h:outputText value="Aktionen" />
+	        </f:facet>
+	        <p:commandButton value="Löschen" actionListener="#{plantBean.deletePlant(plant)}" update="plantList" />
+    	</p:column>
 	</p:dataTable>
 	
 </ui:composition>
