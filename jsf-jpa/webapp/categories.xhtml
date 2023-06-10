@@ -42,6 +42,12 @@
 			<p:inputText label="edited" placeholder="Neue Bezeichnung" value="${categoryBean.newCategoryName}"/>
 			<p:commandButton value="Speichern" actionListener="${categoryBean.updateCategory(category, edited)}" update="categoryList"/>
 		</p:column>
+		<p:column>
+	        <f:facet name="header">
+	            <h:outputText value="Aktionen" />
+	        </f:facet>
+	        <p:commandButton value="Löschen" actionListener="#{categoryBean.deleteCategory(category)}" update="categoryList" />
+    	</p:column>
     </p:dataTable>
     
 </ui:composition>

@@ -63,6 +63,17 @@ public class CategoryBean {
     	update();
     }
     
+    // Delete a saved Category
+    
+    public void deleteCategory(Category category) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.remove(category);
+        transaction.commit();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Kategorie " + category.getName() + " wurde gelöscht"));
+        loadCategoriesFromDB(); // Reload the category list after deletion
+    }
+    
     // Load saved Categories from Database
     
     public void loadCategoriesFromDB() {
