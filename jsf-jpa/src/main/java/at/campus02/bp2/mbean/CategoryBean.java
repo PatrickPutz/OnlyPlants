@@ -54,7 +54,7 @@ public class CategoryBean {
         entityManager.remove(category);
         transaction.commit();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Kategorie " + category.getName() + " wurde gelöscht"));
-        loadCategoriesFromDB(); // Reload the category list after deletion
+        loadCategoriesFromDB();
     }
     
     // Load saved Categories from Database
