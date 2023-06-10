@@ -28,12 +28,15 @@
 			<h:outputText value="#{category.name}"></h:outputText>
 		</p:column>
 		<p:column>
+			<f:facet name="header">
+	            <h:outputText value="Bearbeiten" />
+	        </f:facet>
 			<p:inputText label="edited" placeholder="Neue Bezeichnung" value="${category.name}"/>
 			<p:commandButton value="Speichern" actionListener="${categoryBean.updateCategory(category)}" update="categoryList"/>
 		</p:column>
 		<p:column>
 	        <f:facet name="header">
-	            <h:outputText value="Aktionen" />
+	            <h:outputText value="Löschen" />
 	        </f:facet>
 	        <p:commandButton value="Löschen" actionListener="#{categoryBean.deleteCategory(category)}" update="categoryList" />
     	</p:column>
