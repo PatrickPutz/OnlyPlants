@@ -2,12 +2,16 @@ package at.campus02.bp2.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import at.campus02.bp2.model.Category;
+
 
 @Entity
 @Table(name="plant")
@@ -24,6 +28,14 @@ public class Plant implements Serializable{
 	private String description;
 	private ArrayList<Demand> demands;
 
+	 @ManyToMany(mappedBy = "plants")
+	 private List<Category> categories = new ArrayList<>();
+	 
+	 public Plant() {
+	        categories = new ArrayList<>();
+	 }
+
+	
 	public void addDemand(Demand demand){
 		demands.add(demand);
 	}
@@ -33,6 +45,14 @@ public class Plant implements Serializable{
 	}
 
 	// Getter and Setter Methods
+	
+	public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
 	
 	public ArrayList<Demand> getDemands() {
 		return demands;

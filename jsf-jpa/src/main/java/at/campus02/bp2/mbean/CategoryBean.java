@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import at.campus02.bp2.model.Category;
+import at.campus02.bp2.model.Plant;
 import at.campus02.bp2.utils.EntityManagerFactoryProvider;
 
 @ManagedBean
@@ -28,12 +29,28 @@ public class CategoryBean {
 
     }
 
+    // Associate a plant with a category
+    
+    public void associatePlantWithCategory(Plant plant, Category category) {
+        category.addPlant(plant);
+    }
+    
+    // Disassociate a plant from a category
+    
+    public void disassociatePlantFromCategory(Plant plant, Category category) {
+        category.removePlant(plant);
+    }
+    
     // Save a new Category
     
     public void save() {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        entityManager.merge(getNewCategory());
+        Category mergedCategory = entityManager.merge(getNewCategory());
+        for (Plant plant : mergedCategory.getPlants()) {
+            plant.getCategories().add(mergedCategory);
+            entityManager.merge(plant);
+        }
         transaction.commit();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Kategorie " + getNewCategory().getName() + " wurde gespeichert"));
         setNewCategory(new Category());
@@ -52,8 +69,12 @@ public class CategoryBean {
     // Delete a saved Category
     
     public void deleteCategory(Category category) {
-        EntityTransaction transaction = entityManager.getTransaction();
+    	EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
+        for (Plant plant : category.getPlants()) {
+            plant.getCategories().remove(category);
+            entityManager.merge(plant);
+        }
         entityManager.remove(category);
         transaction.commit();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Kategorie " + category.getName() + " wurde gelöscht"));
@@ -63,7 +84,7 @@ public class CategoryBean {
     // Load saved Categories from Database
     
     public void loadCategoriesFromDB() {
-    	categoryList = entityManager.createQuery("from Category", Category.class).getResultList();
+        categoryList = entityManager.createQuery("SELECT DISTINCT c FROM Category c LEFT JOIN FETCH c.plants", Category.class).getResultList();
     }
 
     // Load a Category by its ID
