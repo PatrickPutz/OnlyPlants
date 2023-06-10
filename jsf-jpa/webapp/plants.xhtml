@@ -46,9 +46,9 @@
 			<f:facet name="header">
 	            <h:outputText value="Bearbeiten" />
 	        </f:facet>
-			<p:inputText label="editedName" placeholder="Neue Bezeichnung" value="${plant.name}"/>
-			<p:inputText label="editedType" placeholder="Neue Bezeichnung" value="${plant.type}"/>
-			<p:inputText label="editedDescription" placeholder="Neue Bezeichnung" value="${plant.description}"/>
+			<p:inputText label="editedName" placeholder="Neuer Name" value="${plant.name}"/>
+			<p:inputText label="editedType" placeholder="Neuer Typ" value="${plant.type}"/>
+			<p:inputText label="editedDescription" placeholder="Neue Beschreibung" value="${plant.description}"/>
 			<p:commandButton value="Speichern" actionListener="${plantBean.updatePlant(plant)}" update="plantList"/>
 		</p:column>
 		<p:column>
