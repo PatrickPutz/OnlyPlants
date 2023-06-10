@@ -12,8 +12,6 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import at.campus02.bp2.model.Article;
-import at.campus02.bp2.model.Category;
 import at.campus02.bp2.model.Plant;
 import at.campus02.bp2.utils.EntityManagerFactoryProvider;
 
