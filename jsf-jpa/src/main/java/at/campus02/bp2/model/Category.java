@@ -2,17 +2,12 @@ package at.campus02.bp2.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name="category")
@@ -25,22 +20,15 @@ public class Category implements Serializable{
 	private int id;
 	private int userId;
 	private String name;
-	
-	@ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "category_plant",
-            joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "plant_id"))
-    private List<Plant> plants = new ArrayList<>();
+	private ArrayList<Plant> plants;
 
-	 public void addPlant(Plant plant) {
-	        plants.add(plant);
-	        plant.getCategories().add(this);
-	    }
+	public void addPlant(Plant plant){
+		plants.add(plant);
+	}
 
-	    public void removePlant(Plant plant) {
-	        plants.remove(plant);
-	        plant.getCategories().remove(this);
-	    }
+	public void removePlant(Plant plant){
+		plants.remove(plant);
+	}
 
 	// Getter and Setter Methods
 	
@@ -68,11 +56,11 @@ public class Category implements Serializable{
 		this.name = name;
 	}
 
-	public List<Plant> getPlants() {
+	public ArrayList<Plant> getPlants() {
 		return plants;
 	}
 
-	public void setPlants(List<Plant> plants) {
+	public void setPlants(ArrayList<Plant> plants) {
 		this.plants = plants;
 	}
 }
