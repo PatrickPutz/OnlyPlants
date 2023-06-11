@@ -75,7 +75,7 @@ public class PlantBean {
         plantList = entityManager.createQuery("from Plant", Plant.class).getResultList();
     }
     
-    // Required Entity Manger Methods
+    // Required Entity Manager Methods
     
     @PostConstruct
     public void createEntityManager(){

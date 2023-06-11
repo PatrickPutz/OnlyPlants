@@ -91,7 +91,7 @@ public class CategoryBean {
     	return entityManager.find(Category.class, categoryId);
     }
     
-    // Required Entity Manger Methods
+    // Required Entity Manager Methods
     
     @PostConstruct
     public void createEntityManager(){
