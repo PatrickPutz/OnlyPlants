@@ -50,9 +50,12 @@ public class PlantBean {
     public void updatePlant(Plant plant) {
     	EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
+        Category category = entityManager.find(Category.class, getSelectedCategoryId());
+        plant.setCategory(category);
         entityManager.merge(plant);
         transaction.commit();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Pflanze " + plant.getName() + " wurde gespeichert"));
+        setSelectedCategoryId(null);
     }
     
     // Delete a saved Plant

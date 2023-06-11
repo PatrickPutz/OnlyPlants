@@ -58,6 +58,9 @@
 	        <p:inputText label="editedName" placeholder="Neuer Name" value="${plant.name}" />
 	        <p:inputText label="editedType" placeholder="Neuer Typ" value="${plant.type}" />
 	        <p:inputText label="editedDescription" placeholder="Neue Beschreibung" value="${plant.description}" />
+	        <p:selectOneMenu label="Kategorie" value="${plantBean.selectedCategoryId}">
+		        <f:selectItems value="${categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
+		    </p:selectOneMenu>
 	        <p:commandButton value="Speichern" actionListener="${plantBean.updatePlant(plant)}" update="plantList" />
 	    </p:column>
 	    <p:column>
