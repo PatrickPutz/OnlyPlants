@@ -38,6 +38,7 @@ public class PlantBean {
         transaction.begin();
         Category category = entityManager.find(Category.class, getSelectedCategoryId());
         newPlant.setCategory(category);
+        category.addPlant(newPlant);
         entityManager.persist(newPlant);
         transaction.commit();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "The plant " + newPlant.getName() + " has been saved."));
@@ -52,6 +53,7 @@ public class PlantBean {
         transaction.begin();
         Category category = entityManager.find(Category.class, getSelectedCategoryId());
         plant.setCategory(category);
+        category.addPlant(plant);
         entityManager.merge(plant);
         transaction.commit();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Pflanze " + plant.getName() + " wurde gespeichert"));
@@ -63,6 +65,7 @@ public class PlantBean {
     public void deletePlant(Plant plant) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
+        plant.getCategory().removePlant(plant);
         entityManager.remove(plant);
         transaction.commit();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Pflanze " + plant.getName() + " wurde gelöscht"));
