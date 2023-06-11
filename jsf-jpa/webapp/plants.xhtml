@@ -11,52 +11,62 @@
 	
 
 	<p:fieldset legend="Pflanze anlegen" style="margin-bottom:20px">
-		<p:inputText label="Pflanzenname" placeholder="Pflanzenname" value="${plantBean.newPlant.name}"/>
-		<p:inputText label="Pflanzentyp" placeholder="Pflanzentyp" value="${plantBean.newPlant.type}"/>
-		<p:inputText label="Beschreibung" placeholder="Beschreibung" value="${plantBean.newPlant.description}"/>
-		<p:commandButton value="Speichern" actionListener="${plantBean.save}" update="messages,plantList" />
+	    <p:inputText label="Pflanzenname" placeholder="Pflanzenname" value="${plantBean.newPlant.name}"/>
+	    <p:inputText label="Pflanzentyp" placeholder="Pflanzentyp" value="${plantBean.newPlant.type}"/>
+	    <p:inputText label="Beschreibung" placeholder="Beschreibung" value="${plantBean.newPlant.description}"/>
+	    <p:selectOneMenu label="Kategorie" value="${plantBean.selectedCategoryId}">
+	        <f:selectItems value="${categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
+	    </p:selectOneMenu>
+	    <p:commandButton value="Speichern" actionListener="${plantBean.save}" update="messages,plantList" />
 	</p:fieldset>
 
 	<p:dataTable id="plantList" value="#{plantBean.plantList}" var="plant">
-		<p:column>
-			<f:facet name="header">
-				<h:outputText value="Nr."></h:outputText>
-			</f:facet>
-			<h:outputText value="#{plant.id}"></h:outputText>
-		</p:column>
-		<p:column>
-			<f:facet name="header">
-				<h:outputText value="Name"></h:outputText>
-			</f:facet>
-			<h:outputText value="#{plant.name}"></h:outputText>
-		</p:column>
-		<p:column>
-			<f:facet name="header">
-				<h:outputText value="Typ"></h:outputText>
-			</f:facet>
-			<h:outputText value="#{plant.type}"></h:outputText>
-		</p:column>
-		<p:column>
-			<f:facet name="header">
-				<h:outputText value="Beschreibung"></h:outputText>
-			</f:facet>
-			<h:outputText value="#{plant.description}"></h:outputText>
-		</p:column>
-		<p:column>
-			<f:facet name="header">
+	    <p:column>
+	        <f:facet name="header">
+	            <h:outputText value="Nr." />
+	        </f:facet>
+	        <h:outputText value="#{plant.id}" />
+	    </p:column>
+	    <p:column>
+	        <f:facet name="header">
+	            <h:outputText value="Name" />
+	        </f:facet>
+	        <h:outputText value="#{plant.name}" />
+	    </p:column>
+	    <p:column>
+	        <f:facet name="header">
+	            <h:outputText value="Typ" />
+	        </f:facet>
+	        <h:outputText value="#{plant.type}" />
+	    </p:column>
+	    <p:column>
+	        <f:facet name="header">
+	            <h:outputText value="Beschreibung" />
+	        </f:facet>
+	        <h:outputText value="#{plant.description}" />
+	    </p:column>
+	    <p:column>
+	        <f:facet name="header">
+	            <h:outputText value="Kategorie" />
+	        </f:facet>
+	        <h:outputText value="#{plant.category.name}" />
+	    </p:column>
+	    <p:column>
+	        <f:facet name="header">
 	            <h:outputText value="Bearbeiten" />
 	        </f:facet>
-			<p:inputText label="editedName" placeholder="Neuer Name" value="${plant.name}"/>
-			<p:inputText label="editedType" placeholder="Neuer Typ" value="${plant.type}"/>
-			<p:inputText label="editedDescription" placeholder="Neue Beschreibung" value="${plant.description}"/>
-			<p:commandButton value="Speichern" actionListener="${plantBean.updatePlant(plant)}" update="plantList"/>
-		</p:column>
-		<p:column>
+	        <p:inputText label="editedName" placeholder="Neuer Name" value="${plant.name}" />
+	        <p:inputText label="editedType" placeholder="Neuer Typ" value="${plant.type}" />
+	        <p:inputText label="editedDescription" placeholder="Neue Beschreibung" value="${plant.description}" />
+	        <p:commandButton value="Speichern" actionListener="${plantBean.updatePlant(plant)}" update="plantList" />
+	    </p:column>
+	    <p:column>
 	        <f:facet name="header">
 	            <h:outputText value="Löschen" />
 	        </f:facet>
 	        <p:commandButton value="Löschen" actionListener="#{plantBean.deletePlant(plant)}" update="plantList" />
-    	</p:column>
+	    </p:column>
 	</p:dataTable>
+
 	
 </ui:composition>

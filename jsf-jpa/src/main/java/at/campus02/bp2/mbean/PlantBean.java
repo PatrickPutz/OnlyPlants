@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import at.campus02.bp2.model.Category;
 import at.campus02.bp2.model.Plant;
 import at.campus02.bp2.utils.EntityManagerFactoryProvider;
 
@@ -23,6 +24,8 @@ public class PlantBean {
 
     private Plant newPlant = new Plant();
     private List<Plant> plantList = new ArrayList<Plant>();
+    private Integer selectedCategoryId;
+    private Integer selectedPlantId;
 
     public PlantBean(){
 
@@ -33,9 +36,13 @@ public class PlantBean {
     public void save() {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        entityManager.merge(newPlant);
+        Category category = entityManager.find(Category.class, getSelectedCategoryId());
+        newPlant.setCategory(category);
+        entityManager.persist(newPlant);
         transaction.commit();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Pflanze " + newPlant.getName() + " wurde gespeichert"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "The plant " + newPlant.getName() + " has been saved."));
+        setNewPlant(new Plant());
+        setSelectedCategoryId(null);
     }
     
     // Update a saved Plant
@@ -95,4 +102,20 @@ public class PlantBean {
     public void setNewPlant(Plant newPlant) {
         this.newPlant = newPlant;
     }
+
+	public Integer getSelectedCategoryId() {
+		return selectedCategoryId;
+	}
+
+	public void setSelectedCategoryId(Integer selectedCategoryId) {
+		this.selectedCategoryId = selectedCategoryId;
+	}
+
+	public Integer getSelectedPlantId() {
+		return selectedPlantId;
+	}
+
+	public void setSelectedPlantId(Integer selectedPlantId) {
+		this.selectedPlantId = selectedPlantId;
+	}
 }

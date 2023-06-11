@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import at.campus02.bp2.model.Category;
+import at.campus02.bp2.model.Plant;
 import at.campus02.bp2.utils.EntityManagerFactoryProvider;
 
 @ManagedBean
@@ -23,20 +24,38 @@ public class CategoryBean {
     private List<Category> categoryList = new ArrayList<Category>();
 
     private Category newCategory = new Category();
+    private Plant newPlant = new Plant();
+    private Integer selectedCategoryId;
+    private PlantBean plantBean;
     
     public CategoryBean(){
 
     }
 
+    public void assignPlantToCategory() {
+        Plant selectedPlant = entityManager.find(Plant.class, getPlantBean().getSelectedPlantId());
+        Category selectedCategory = entityManager.find(Category.class, getSelectedCategoryId());
+        selectedCategory.addPlant(selectedPlant);
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.merge(selectedCategory);
+        transaction.commit();
+        FacesContext.getCurrentInstance().addMessage(null,
+            new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Pflanze wurde der Kategorie zugewiesen"));
+    }
+    
     // Save a new Category
     
     public void save() {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        entityManager.merge(getNewCategory());
+        Category category = entityManager.merge(newCategory);
+        getNewPlant().setCategory(category);
+        entityManager.persist(getNewPlant());
         transaction.commit();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Kategorie " + getNewCategory().getName() + " wurde gespeichert"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Kategorie " + newCategory.getName() + " wurde gespeichert"));
         setNewCategory(new Category());
+        setNewPlant(new Plant());
     }
     
     // Update a saved Category
@@ -77,6 +96,7 @@ public class CategoryBean {
     @PostConstruct
     public void createEntityManager(){
         entityManager = EntityManagerFactoryProvider.get().createEntityManager();
+        loadCategoriesFromDB();
     }
 
     @PreDestroy
@@ -86,8 +106,8 @@ public class CategoryBean {
 
     // Getter and Setter Methods
     
-    public List<Category> getCategoryList(){
-    	loadCategoriesFromDB();
+    public List<Category> getCategoryList() {
+        loadCategoriesFromDB();
         return categoryList;
     }
 
@@ -101,6 +121,30 @@ public class CategoryBean {
 
 	public void setNewCategory(Category newCategory) {
 		this.newCategory = newCategory;
+	}
+
+	public Plant getNewPlant() {
+		return newPlant;
+	}
+
+	public void setNewPlant(Plant newPlant) {
+		this.newPlant = newPlant;
+	}
+
+	public Integer getSelectedCategoryId() {
+		return selectedCategoryId;
+	}
+
+	public void setSelectedCategoryId(Integer selectedCategoryId) {
+		this.selectedCategoryId = selectedCategoryId;
+	}
+
+	public PlantBean getPlantBean() {
+		return plantBean;
+	}
+
+	public void setPlantBean(PlantBean plantBean) {
+		this.plantBean = plantBean;
 	}
 
 }

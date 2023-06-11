@@ -2,11 +2,14 @@ package at.campus02.bp2.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,7 +23,9 @@ public class Category implements Serializable{
 	private int id;
 	private int userId;
 	private String name;
-	private ArrayList<Plant> plants;
+	
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Plant> plants;
 
 	public void addPlant(Plant plant){
 		plants.add(plant);
@@ -56,11 +61,11 @@ public class Category implements Serializable{
 		this.name = name;
 	}
 
-	public ArrayList<Plant> getPlants() {
+	public List<Plant> getPlants() {
 		return plants;
 	}
 
-	public void setPlants(ArrayList<Plant> plants) {
+	public void setPlants(List<Plant> plants) {
 		this.plants = plants;
 	}
 }

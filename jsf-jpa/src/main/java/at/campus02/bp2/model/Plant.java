@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +26,10 @@ public class Plant implements Serializable{
 	private String description;
 	private ArrayList<Demand> demands;
 
+	@ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+	
 	public void addDemand(Demand demand){
 		demands.add(demand);
 	}
@@ -81,5 +87,13 @@ public class Plant implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
 }

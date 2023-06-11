@@ -3,6 +3,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 template="/WEB-INF/template.xhtml">
     <ui:define name="header">
         Plant Dashboard
@@ -26,6 +27,20 @@
                 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
                 dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
+            <f:facet name="content">
+			    <h3>Plants:</h3>
+			    <p:dataTable id="plantList" value="#{category.plants}" var="plant">
+			        <p:column headerText="Name">
+			            <h:outputText value="#{plant.name}" />
+			        </p:column>
+			        <p:column headerText="Type">
+			            <h:outputText value="#{plant.type}" />
+			        </p:column>
+			        <p:column headerText="Description">
+			            <h:outputText value="#{plant.description}" />
+			        </p:column>
+			    </p:dataTable>
+			</f:facet>
         </p:tab>
     </p:accordionPanel>
 
@@ -40,10 +55,9 @@
 
     <p:dialog header="Anpassen" widgetVar="editcategorydialog" minHeight="40" minWidth="350" showEffect="fade" modal="true">
         <p:inputText label="newcategoryname" placeholder="Neue Bezeichnung"/>
-	    <f:facet name="footer">
-	        <p:commandButton type="button" value="Verwerfen" styleClass="ui-button-flat mr-2" minWidth="10"/>
-	        <p:commandButton type="button" value="Speichern" minWidth="10"/>
-	    </f:facet>
-	</p:dialog>
-
+        <f:facet name="footer">
+            <p:commandButton type="button" value="Verwerfen" styleClass="ui-button-flat mr-2" minWidth="10"/>
+            <p:commandButton type="button" value="Speichern" minWidth="10"/>
+        </f:facet>
+    </p:dialog>
 </ui:composition>
