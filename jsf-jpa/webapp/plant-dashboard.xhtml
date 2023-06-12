@@ -22,22 +22,15 @@
                     <h:outputText styleClass="ui-icon pi pi-pencil" />
                 </p:commandLink>
             </f:facet>
-            <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-		    <p:dataTable id="plantList" value="#{category.plants}" var="plant">
-		        <p:column headerText="Name">
-		            <h:outputText value="#{plant.name}" />
-		        </p:column>
-		        <p:column headerText="Type">
-		            <h:outputText value="#{plant.type}" />
-		        </p:column>
-		        <p:column headerText="Description">
-		            <h:outputText value="#{plant.description}" />
-		        </p:column>
-		    </p:dataTable>
+            <p:carousel value="#{category.plants}" var="plant"
+			    numVisible="#{category.plants.size() >= 3 ? 3 : category.plants.size()}"
+			    circular="true" styleClass="plant-carousel">
+			    <p:panelGrid columns="1" style="width: 200px; margin-right: 10px;">
+			        <h:outputText value="#{plant.name}" />
+			        <h:outputText value="#{plant.type}" />
+			        <h:outputText value="#{plant.description}" />
+			    </p:panelGrid>
+			</p:carousel>
         </p:tab>
     </p:accordionPanel>
 
