@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Lob;
 
 @Entity
 @Table(name="plant")
@@ -29,6 +31,10 @@ public class Plant implements Serializable{
 	@ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+	
+	@Lob
+	@Column(name = "image_data", columnDefinition = "BLOB")
+	private byte[] imageData;
 	
 	public void addDemand(Demand demand){
 		demands.add(demand);
@@ -95,5 +101,13 @@ public class Plant implements Serializable{
     public void setCategory(Category category) {
         this.category = category;
     }
+
+	public byte[] getImageData() {
+		return imageData;
+	}
+
+	public void setImageData(byte[] imageData) {
+		this.imageData = imageData;
+	}
 
 }

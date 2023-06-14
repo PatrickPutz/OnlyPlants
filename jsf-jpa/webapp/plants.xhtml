@@ -11,6 +11,7 @@
 	
 
 	<p:fieldset legend="Pflanze anlegen" style="margin-bottom:20px">
+		<p:fileUpload label="Bild" fileUploadListener="#{plantBean.handleImageUpload}" mode="advanced" dragDropSupport="false" />
 	    <p:inputText label="Pflanzenname" placeholder="Pflanzenname" value="${plantBean.newPlant.name}"/>
 	    <p:inputText label="Pflanzentyp" placeholder="Pflanzentyp" value="${plantBean.newPlant.type}"/>
 	    <p:inputText label="Beschreibung" placeholder="Beschreibung" value="${plantBean.newPlant.description}"/>
@@ -27,6 +28,12 @@
 	        </f:facet>
 	        <h:outputText value="#{plant.id}" />
 	    </p:column>
+	    <p:column>
+		    <f:facet name="header">
+		        <h:outputText value="Bild" />
+		    </f:facet>
+		    <p:graphicImage value="#{plant.imageData}" />
+		</p:column>
 	    <p:column>
 	        <f:facet name="header">
 	            <h:outputText value="Name" />

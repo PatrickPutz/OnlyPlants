@@ -12,6 +12,9 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
+
 import at.campus02.bp2.model.Category;
 import at.campus02.bp2.model.Plant;
 import at.campus02.bp2.utils.EntityManagerFactoryProvider;
@@ -31,6 +34,12 @@ public class PlantBean {
 
     }
 
+    public void handleImageUpload(FileUploadEvent event) {
+        UploadedFile uploadedFile = (UploadedFile) event.getFile();
+        newPlant.setImageData(uploadedFile.getContents());
+    }
+
+    
     // Save a new Plant
     
     public void save() {
