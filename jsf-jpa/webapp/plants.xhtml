@@ -75,6 +75,10 @@
             </f:facet>
             <p:commandButton value="Protokoll anzeigen" onclick="PF('protocolDialog_#{plant.id}').show();" />
             <p:dialog id="protocolDialog_#{plant.id}" header="Protokoll für #{plant.name}" widgetVar="protocolDialog_#{plant.id}" modal="true" resizable="false">
+                <p:inputTextarea rows="6" cols="55" /> <br/>
+                <p></p>
+               	<p:commandButton value="Eintrag speichern"/>
+               	<p></p>
                 <p:dataTable id="protocolTable_#{plant.id}" value="#{plant.protocol.entries}" var="entry">
                     <p:column>
                         <f:facet name="header">
