@@ -77,7 +77,7 @@
             <p:dialog id="protocolDialog_#{plant.id}" header="Protokoll für #{plant.name}" widgetVar="protocolDialog_#{plant.id}" modal="true" resizable="false">
                 <p:inputTextarea rows="6" cols="55" label="Protokolleintrag" placeholder="Neuer Eintrag" value="${plantBean.protocolEntryText}"/> <br/>
                 <p></p>
-               	<p:commandButton value="Eintrag speichern" actionListener="${plantBean.addProtocolEntry(plant)}"/>
+               	<p:commandButton value="Eintrag speichern" actionListener="${plantBean.addProtocolEntry(plant)}" update=""/>
                	<p></p>
                 <p:dataTable id="protocolTable_#{plant.id}" value="#{plant.protocol.entries}" var="entry">
                     <p:column>
