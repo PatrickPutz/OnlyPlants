@@ -10,6 +10,9 @@
 	</ui:define>
 	
 	
+	
+	
+	
 	<p:fieldset legend="Artikel anlegen" style="margin-bottom:20px">
 		<p:inputText label="Artikelname" value="${articleBean.newArticle.name}"/>
 		<p:commandButton value="Speichern" actionListener="${articleBean.save}" update="messages,articleList" />
@@ -30,7 +33,7 @@
 		</p:column>
 	</p:dataTable>
 	
-	<ul>
+	<ul class = "fancy-list">
 		<li>
 			<h:link value="Plants" outcome="plants.xhtml"/>
 		</li>

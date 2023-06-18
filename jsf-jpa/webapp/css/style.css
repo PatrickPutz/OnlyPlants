@@ -1,0 +1,38 @@
+@charset "ISO-8859-1";
+ul.fancy-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: white;
+}
+
+ul.fancy-list li {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+ul.fancy-list li:before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ff6b6b;
+}
+
+ul.fancy-list li:hover:before {
+  background-color: #ffa5a5; 
+}
+
+ul.fancy-list li a {
+  color: #333;
+  text-decoration: none;
+}
+
+ul.fancy-list li a:hover {
+  color: #ff6b6b; 
+}
