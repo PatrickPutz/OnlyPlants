@@ -11,7 +11,7 @@
 	
 	<p:menuButton value="Hinzufügen" buttonStyle="border-radius: 0 1rem">
         <p:menuitem value="Pflanze" icon="pi pi-filter" oncomplete="PF('plantDialog').show();"/>
-        <p:menuitem value="Ort" icon="pi pi-flag"/>
+        <p:menuitem value="Ort" icon="pi pi-flag" oncomplete="PF('categoryDialog').show();"/>
     </p:menuButton>
 	
 	<p></p>
@@ -61,6 +61,11 @@
 	        <f:selectItems value="${categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
 	    </p:selectOneMenu>
 	    <p:commandButton value="Speichern" actionListener="${plantBean.save}" update="messages,plantPanel,categoryPanel" oncomplete="PF('plantDialog').hide();" />
+	</p:dialog>
+	
+	<p:dialog id="categoryDialog" header="Kategorie oder Ort anlegen" widgetVar="categoryDialog" modal="true" resizable="false">
+		<p:inputText label="Kategoriename" placeholder="Kategorie oder Ort" value="${categoryBean.newCategory.name}"/>
+		<p:commandButton value="Speichern" actionListener="${categoryBean.save}" update="messages,plantPanel,categoryPanel" oncomplete="PF('categoryDialog').hide();" />
 	</p:dialog>
 	
 </ui:composition>
