@@ -9,17 +9,10 @@
 		Pflanzen
 	</ui:define>
 	
-
-	<p:fieldset legend="Pflanze anlegen" style="margin-bottom:20px">
-		<p:fileUpload label="Bild" fileUploadListener="#{plantBean.handleImageUpload}" mode="advanced" dragDropSupport="false" />
-	    <p:inputText label="Pflanzenname" placeholder="Pflanzenname" value="${plantBean.newPlant.name}"/>
-	    <p:inputText label="Pflanzentyp" placeholder="Pflanzentyp" value="${plantBean.newPlant.type}"/>
-	    <p:inputText label="Beschreibung" placeholder="Beschreibung" value="${plantBean.newPlant.description}"/>
-	    <p:selectOneMenu label="Kategorie" value="${plantBean.selectedCategoryId}">
-	        <f:selectItems value="${categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
-	    </p:selectOneMenu>
-	    <p:commandButton value="Speichern" actionListener="${plantBean.save}" update="messages,plantList" />
-	</p:fieldset>
+	<p:menuButton value="Hinzufügen" buttonStyle="border-radius: 0 1rem">
+        <p:menuitem value="Pflanze" icon="pi pi-filter" oncomplete="PF('plantDialog').show();"/>
+        <p:menuitem value="Ort" icon="pi pi-flag"/>
+    </p:menuButton>
 
 	<p:dataTable id="plantList" value="#{plantBean.plantList}" var="plant">
 	    <p:column>
@@ -77,6 +70,17 @@
 	        <p:commandButton value="Löschen" actionListener="#{plantBean.deletePlant(plant)}" update="plantList" />
 	    </p:column>
 	</p:dataTable>
+
+	<p:dialog id="plantDialog" header="Pflanze anlegen" widgetVar="plantDialog" modal="true" resizable="false">
+	    <p:fileUpload label="Bild" fileUploadListener="#{plantBean.handleImageUpload}" mode="advanced" dragDropSupport="false" />
+	    <p:inputText label="Pflanzenname" placeholder="Pflanzenname" value="${plantBean.newPlant.name}"/>
+	    <p:inputText label="Pflanzentyp" placeholder="Pflanzentyp" value="${plantBean.newPlant.type}"/>
+	    <p:inputText label="Beschreibung" placeholder="Beschreibung" value="${plantBean.newPlant.description}"/>
+	    <p:selectOneMenu label="Kategorie" value="${plantBean.selectedCategoryId}">
+	        <f:selectItems value="${categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
+	    </p:selectOneMenu>
+	    <p:commandButton value="Speichern" actionListener="${plantBean.save}" update="messages,plantList" oncomplete="PF('plantDialog').hide();" />
+	</p:dialog>
 
 	
 </ui:composition>
