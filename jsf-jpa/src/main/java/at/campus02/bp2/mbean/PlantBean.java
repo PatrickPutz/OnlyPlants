@@ -32,6 +32,7 @@ public class PlantBean {
     private List<Plant> plantList = new ArrayList<Plant>();
     private Integer selectedCategoryId;
     private Integer selectedPlantId;
+    private String protocolEntryText;
 
     public PlantBean(){
 
@@ -49,6 +50,29 @@ public class PlantBean {
         entry.setEntryText(entryText);
         entry.setTimestamp(LocalDateTime.now());
         return entry;
+    }
+    
+    // Add the ProtocolEntry to the Protocol
+    
+    public void addProtocolEntry(Plant plant) {
+    	EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Category category = entityManager.find(Category.class, getSelectedCategoryId());
+        plant.setCategory(category);
+
+        Protocol protocol = plant.getProtocol();
+        if (protocol == null) {
+            protocol = new Protocol();
+            plant.setProtocol(protocol);
+        }
+        protocol.addEntry(createProtocolEntry(protocolEntryText));
+
+        category.addPlant(plant);
+        entityManager.merge(plant);
+        transaction.commit();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Info", "Die Pflanze " + plant.getName() + " wurde gespeichert"));
+        setSelectedCategoryId(null);
     }
     
     // Save a new Plant
@@ -158,5 +182,13 @@ public class PlantBean {
 
 	public void setSelectedPlantId(Integer selectedPlantId) {
 		this.selectedPlantId = selectedPlantId;
+	}
+
+	public String getProtocolEntryText() {
+		return protocolEntryText;
+	}
+
+	public void setProtocolEntryText(String protocolEntryText) {
+		this.protocolEntryText = protocolEntryText;
 	}
 }
