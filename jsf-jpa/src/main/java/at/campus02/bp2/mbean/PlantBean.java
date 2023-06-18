@@ -61,7 +61,7 @@ public class PlantBean {
 
         Protocol protocol = new Protocol();
         newPlant.setProtocol(protocol);
-        protocol.addEntry(createProtocolEntry("Plant created")); // Example entry
+        protocol.addEntry(createProtocolEntry("Plant created"));
 
         category.addPlant(newPlant);
         entityManager.persist(newPlant);
@@ -85,7 +85,7 @@ public class PlantBean {
             protocol = new Protocol();
             plant.setProtocol(protocol);
         }
-        protocol.addEntry(createProtocolEntry("Plant updated")); // Example entry
+        protocol.addEntry(createProtocolEntry("Plant updated"));
 
         category.addPlant(plant);
         entityManager.merge(plant);
