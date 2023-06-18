@@ -16,7 +16,7 @@
 	
 	<p></p>
 	
-	<p:accordionPanel multiple="true">
+	<p:accordionPanel id="plantPanel" multiple="true">
 	    <p:tab title="Alle Pflanzen">
 	        <p:carousel value="#{plantBean.plantList}" var="plant"
 	                    numVisible="#{plantBean.plantList.size() >= 3 ? 3 : plantBean.plantList.size()}"
@@ -39,7 +39,7 @@
 	    <p:selectOneMenu label="Kategorie" value="${plantBean.selectedCategoryId}">
 	        <f:selectItems value="${categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
 	    </p:selectOneMenu>
-	    <p:commandButton value="Speichern" actionListener="${plantBean.save}" update="messages" oncomplete="PF('plantDialog').hide();" />
+	    <p:commandButton value="Speichern" actionListener="${plantBean.save}" update="messages,plantPanel" oncomplete="PF('plantDialog').hide();" />
 	</p:dialog>
 	
 </ui:composition>
