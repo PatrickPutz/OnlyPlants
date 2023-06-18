@@ -34,6 +34,21 @@
         </p:tab>
     </p:accordionPanel>
 
+	<p:accordionPanel multiple="true">
+	    <p:tab title="Alle Pflanzen">
+	        <p:carousel value="#{plantBean.plantList}" var="plant"
+	                    numVisible="#{plantBean.plantList.size() >= 3 ? 3 : plantBean.plantList.size()}"
+	                    circular="true" styleClass="plant-carousel">
+	            <p:panelGrid columns="1" style="width: 200px; margin-right: 10px;">
+	                <h:outputText value="#{plant.name}" />
+	                <h:outputText value="#{plant.type}" />
+	                <h:outputText value="#{plant.description}" />
+	                <h:outputText value="#{plant.category.name}" />
+	            </p:panelGrid>
+	        </p:carousel>
+	    </p:tab>
+	</p:accordionPanel>
+
     <p:accordionPanel multiple="true">
         <p:tab title="Settings">
             <p:menuButton value="Hinzufügen" buttonStyleClass="ui-button-outlined" buttonStyle="border-radius: 0 1rem">
