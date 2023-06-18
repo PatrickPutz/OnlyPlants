@@ -27,6 +27,7 @@
 			    numVisible="#{category.plants.size() >= 3 ? 3 : category.plants.size()}"
 			    circular="true" styleClass="plant-carousel">
 			    <p:panelGrid columns="1" style="width: 200px; margin-right: 10px;">
+			    	<p:graphicImage name="images/onlyplants-icon.png" width="100" height="100" />
 			        <h:outputText value="#{plant.name}" />
 			        <h:outputText value="#{plant.type}" />
 			        <h:outputText value="#{plant.description}" />
@@ -51,18 +52,19 @@
 	                    numVisible="#{plantBean.plantList.size() >= 3 ? 3 : plantBean.plantList.size()}"
 	                    circular="true" styleClass="plant-carousel">
 	            <p:panelGrid columns="1" style="width: 200px; margin-right: 10px;">
+	                <p:graphicImage name="images/onlyplants-icon.png" width="100" height="100" />
 	                <h:outputText value="#{plant.name}" />
 	                <h:outputText value="#{plant.type}" />
 	                <h:outputText value="#{plant.description}" />
 	                <h:outputText value="#{plant.category.name}" />
 	                <p:fieldset>
-						<p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
-		                    <h:outputText styleClass="ui-icon pi pi-pencil" />
-		                </p:commandLink>
-						<p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
-		                    <h:outputText styleClass="ui-icon pi pi-trash" />
-		                </p:commandLink>
-					</p:fieldset>
+	                    <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
+	                        <h:outputText styleClass="ui-icon pi pi-pencil" />
+	                    </p:commandLink>
+	                    <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
+	                        <h:outputText styleClass="ui-icon pi pi-trash" />
+	                    </p:commandLink>
+	                </p:fieldset>
 	            </p:panelGrid>
 	        </p:carousel>
 	    </p:tab>
