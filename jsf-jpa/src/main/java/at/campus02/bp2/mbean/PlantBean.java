@@ -1,5 +1,6 @@
 package at.campus02.bp2.mbean;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,8 @@ import org.primefaces.model.UploadedFile;
 
 import at.campus02.bp2.model.Category;
 import at.campus02.bp2.model.Plant;
+import at.campus02.bp2.model.Protocol;
+import at.campus02.bp2.model.ProtocolEntry;
 import at.campus02.bp2.utils.EntityManagerFactoryProvider;
 
 @ManagedBean
@@ -39,18 +42,32 @@ public class PlantBean {
         newPlant.setImageData(uploadedFile.getContents());
     }
 
+    // Create a ProtocolEntry
+    
+    private ProtocolEntry createProtocolEntry(String entryText) {
+        ProtocolEntry entry = new ProtocolEntry();
+        entry.setEntryText(entryText);
+        entry.setTimestamp(LocalDateTime.now());
+        return entry;
+    }
     
     // Save a new Plant
     
     public void save() {
-        EntityTransaction transaction = entityManager.getTransaction();
+    	EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         Category category = entityManager.find(Category.class, getSelectedCategoryId());
         newPlant.setCategory(category);
+
+        Protocol protocol = new Protocol();
+        newPlant.setProtocol(protocol);
+        protocol.addEntry(createProtocolEntry("Plant created")); // Example entry
+
         category.addPlant(newPlant);
         entityManager.persist(newPlant);
         transaction.commit();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "The plant " + newPlant.getName() + " has been saved."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Info", "The plant " + newPlant.getName() + " has been saved."));
         setNewPlant(new Plant());
         setSelectedCategoryId(null);
     }
@@ -62,10 +79,19 @@ public class PlantBean {
         transaction.begin();
         Category category = entityManager.find(Category.class, getSelectedCategoryId());
         plant.setCategory(category);
+
+        Protocol protocol = plant.getProtocol();
+        if (protocol == null) {
+            protocol = new Protocol();
+            plant.setProtocol(protocol);
+        }
+        protocol.addEntry(createProtocolEntry("Plant updated")); // Example entry
+
         category.addPlant(plant);
         entityManager.merge(plant);
         transaction.commit();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Pflanze " + plant.getName() + " wurde gespeichert"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Info", "Die Pflanze " + plant.getName() + " wurde gespeichert"));
         setSelectedCategoryId(null);
     }
     

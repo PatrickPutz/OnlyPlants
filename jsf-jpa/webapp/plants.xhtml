@@ -4,83 +4,104 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
-                
-	<ui:define name="header">
-		Pflanzen
-	</ui:define>
-	
-	<p:menuButton value="Hinzufügen" buttonStyle="border-radius: 0 1rem">
+
+    <ui:define name="header">
+        Pflanzen
+    </ui:define>
+
+    <p:menuButton value="Hinzufügen" buttonStyle="border-radius: 0 1rem">
         <p:menuitem value="Pflanze" icon="pi pi-filter" oncomplete="PF('plantDialog').show();"/>
         <p:menuitem value="Ort" icon="pi pi-flag"/>
     </p:menuButton>
 
-	<p:dataTable id="plantList" value="#{plantBean.plantList}" var="plant">
-	    <p:column>
-	        <f:facet name="header">
-	            <h:outputText value="Nr." />
-	        </f:facet>
-	        <h:outputText value="#{plant.id}" />
-	    </p:column>
-	    <p:column>
-		    <f:facet name="header">
-		        <h:outputText value="Bild" />
-		    </f:facet>
-		    <p:graphicImage value="#{plant.imageData}" />
-		</p:column>
-	    <p:column>
-	        <f:facet name="header">
-	            <h:outputText value="Name" />
-	        </f:facet>
-	        <h:outputText value="#{plant.name}" />
-	    </p:column>
-	    <p:column>
-	        <f:facet name="header">
-	            <h:outputText value="Typ" />
-	        </f:facet>
-	        <h:outputText value="#{plant.type}" />
-	    </p:column>
-	    <p:column>
-	        <f:facet name="header">
-	            <h:outputText value="Beschreibung" />
-	        </f:facet>
-	        <h:outputText value="#{plant.description}" />
-	    </p:column>
-	    <p:column>
-	        <f:facet name="header">
-	            <h:outputText value="Kategorie" />
-	        </f:facet>
-	        <h:outputText value="#{plant.category.name}" />
-	    </p:column>
-	    <p:column>
-	        <f:facet name="header">
-	            <h:outputText value="Bearbeiten" />
-	        </f:facet>
-	        <p:inputText label="editedName" placeholder="Neuer Name" value="${plant.name}" />
-	        <p:inputText label="editedType" placeholder="Neuer Typ" value="${plant.type}" />
-	        <p:inputText label="editedDescription" placeholder="Neue Beschreibung" value="${plant.description}" />
-	        <p:selectOneMenu label="Kategorie" value="${plantBean.selectedCategoryId}">
-		        <f:selectItems value="${categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
-		    </p:selectOneMenu>
-	        <p:commandButton value="Speichern" actionListener="${plantBean.updatePlant(plant)}" update="plantList" />
-	    </p:column>
-	    <p:column>
-	        <f:facet name="header">
-	            <h:outputText value="Löschen" />
-	        </f:facet>
-	        <p:commandButton value="Löschen" actionListener="#{plantBean.deletePlant(plant)}" update="plantList" />
-	    </p:column>
-	</p:dataTable>
+    <p:dataTable id="plantList" value="#{plantBean.plantList}" var="plant">
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Nr." />
+            </f:facet>
+            <h:outputText value="#{plant.id}" />
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Bild" />
+            </f:facet>
+            <p:graphicImage value="#{plant.imageData}" />
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Name" />
+            </f:facet>
+            <h:outputText value="#{plant.name}" />
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Typ" />
+            </f:facet>
+            <h:outputText value="#{plant.type}" />
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Beschreibung" />
+            </f:facet>
+            <h:outputText value="#{plant.description}" />
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Kategorie" />
+            </f:facet>
+            <h:outputText value="#{plant.category.name}" />
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Bearbeiten" />
+            </f:facet>
+            <p:inputText label="editedName" placeholder="Neuer Name" value="#{plant.name}" />
+            <p:inputText label="editedType" placeholder="Neuer Typ" value="#{plant.type}" />
+            <p:inputText label="editedDescription" placeholder="Neue Beschreibung" value="#{plant.description}" />
+            <p:selectOneMenu label="Kategorie" value="#{plantBean.selectedCategoryId}">
+                <f:selectItems value="#{categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
+            </p:selectOneMenu>
+            <p:commandButton value="Speichern" actionListener="#{plantBean.updatePlant(plant)}" update="plantList" />
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Löschen" />
+            </f:facet>
+            <p:commandButton value="Löschen" actionListener="#{plantBean.deletePlant(plant)}" update="plantList" />
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Protokoll" />
+            </f:facet>
+            <p:commandButton value="Protokoll anzeigen" onclick="PF('protocolDialog_#{plant.id}').show();" />
+            <p:dialog id="protocolDialog_#{plant.id}" header="Protokoll für #{plant.name}" widgetVar="protocolDialog_#{plant.id}" modal="true" resizable="false">
+                <p:dataTable id="protocolTable_#{plant.id}" value="#{plant.protocol.entries}" var="entry">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Timestamp" />
+                        </f:facet>
+                        <h:outputText value="#{entry.timestamp}" />
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Eintrag" />
+                        </f:facet>
+                        <h:outputText value="#{entry.entryText}" />
+                    </p:column>
+                </p:dataTable>
+            </p:dialog>
+        </p:column>
+    </p:dataTable>
 
-	<p:dialog id="plantDialog" header="Pflanze anlegen" widgetVar="plantDialog" modal="true" resizable="false">
-	    <p:fileUpload label="Bild" fileUploadListener="#{plantBean.handleImageUpload}" mode="advanced" dragDropSupport="false" />
-	    <p:inputText label="Pflanzenname" placeholder="Pflanzenname" value="${plantBean.newPlant.name}"/>
-	    <p:inputText label="Pflanzentyp" placeholder="Pflanzentyp" value="${plantBean.newPlant.type}"/>
-	    <p:inputText label="Beschreibung" placeholder="Beschreibung" value="${plantBean.newPlant.description}"/>
-	    <p:selectOneMenu label="Kategorie" value="${plantBean.selectedCategoryId}">
-	        <f:selectItems value="${categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
-	    </p:selectOneMenu>
-	    <p:commandButton value="Speichern" actionListener="${plantBean.save}" update="messages,plantList" oncomplete="PF('plantDialog').hide();" />
-	</p:dialog>
+    <p:dialog id="plantDialog" header="Pflanze anlegen" widgetVar="plantDialog" modal="true" resizable="false">
+        <p:fileUpload label="Bild" fileUploadListener="#{plantBean.handleImageUpload}" mode="advanced" dragDropSupport="false" />
+        <p:inputText label="Pflanzenname" placeholder="Pflanzenname" value="#{plantBean.newPlant.name}"/>
+        <p:inputText label="Pflanzentyp" placeholder="Pflanzentyp" value="#{plantBean.newPlant.type}"/>
+        <p:inputText label="Beschreibung" placeholder="Beschreibung" value="#{plantBean.newPlant.description}"/>
+        <p:selectOneMenu label="Kategorie" value="#{plantBean.selectedCategoryId}">
+            <f:selectItems value="#{categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
+        </p:selectOneMenu>
+        <p:commandButton value="Speichern" actionListener="#{plantBean.save}" update="messages,plantList" oncomplete="PF('plantDialog').hide();" />
+    </p:dialog>
 
-	
 </ui:composition>

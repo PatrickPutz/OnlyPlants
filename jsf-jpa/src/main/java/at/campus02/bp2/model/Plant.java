@@ -9,7 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Lob;
 
@@ -35,6 +37,10 @@ public class Plant implements Serializable{
 	@Lob
 	@Column(name = "image_data", columnDefinition = "BLOB")
 	private byte[] imageData;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "protocol_id")
+    private Protocol protocol;
 	
 	public void addDemand(Demand demand){
 		demands.add(demand);
@@ -109,5 +115,13 @@ public class Plant implements Serializable{
 	public void setImageData(byte[] imageData) {
 		this.imageData = imageData;
 	}
+	
+	public Protocol getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(Protocol protocol) {
+        this.protocol = protocol;
+    }
 
 }
