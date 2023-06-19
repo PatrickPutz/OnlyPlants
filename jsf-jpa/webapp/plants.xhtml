@@ -95,6 +95,26 @@
                 </p:dataTable>
             </p:dialog>
         </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Bedürfnisse" />
+            </f:facet>
+            <p:commandButton value="Bedürfnisse anzeigen" onclick="PF('needDialog_#{plant.id}').show();" />
+            <p:dialog id="needDialog_#{plant.id}" header="Bedürfnisse für #{plant.name}" widgetVar="needDialog_#{plant.id}" modal="true" resizable="false">
+                <p:inputTextarea rows="6" cols="55" label="Bedürfnis" placeholder="Neues Bedürfnis" value="${plantBean.needTitle}"/> <br/>
+                <p></p>
+               	<p:commandButton value="Bedürfnis speichern" actionListener="${plantBean.addNeed(plant)}" update=""/>
+               	<p></p>
+                <p:dataTable id="needTable_#{plant.id}" value="#{plant.needs.needs}" var="need">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Bedürfnis" />
+                        </f:facet>
+                        <h:outputText value="#{need.needTitle}" />
+                    </p:column>
+                </p:dataTable>
+            </p:dialog>
+        </p:column>
     </p:dataTable>
 
     <p:dialog id="plantDialog" header="Pflanze anlegen" widgetVar="plantDialog" modal="true" resizable="false">

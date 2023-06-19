@@ -20,6 +20,8 @@ import at.campus02.bp2.model.Category;
 import at.campus02.bp2.model.Plant;
 import at.campus02.bp2.model.Protocol;
 import at.campus02.bp2.model.ProtocolEntry;
+import at.campus02.bp2.model.Need;
+import at.campus02.bp2.model.NeedList;
 import at.campus02.bp2.utils.EntityManagerFactoryProvider;
 
 @ManagedBean
@@ -33,6 +35,7 @@ public class PlantBean {
     private Integer selectedCategoryId;
     private Integer selectedPlantId;
     private String protocolEntryText;
+    private String needTitle;
 
     public PlantBean(){
 
@@ -66,6 +69,37 @@ public class PlantBean {
             plant.setProtocol(protocol);
         }
         protocol.addEntry(createProtocolEntry(protocolEntryText));
+
+        category.addPlant(plant);
+        entityManager.merge(plant);
+        transaction.commit();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Info", "Die Pflanze " + plant.getName() + " wurde gespeichert"));
+        setSelectedCategoryId(null);
+    }
+    
+    // Create a ProtocolEntry
+    
+    private Need createNeed(String needTitle) {
+        Need entry = new Need();
+        entry.setNeedTitle(needTitle);
+        return entry;
+    }
+    
+    // Add the ProtocolEntry to the Protocol
+    
+    public void addNeed(Plant plant) {
+    	EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Category category = entityManager.find(Category.class, getSelectedCategoryId());
+        plant.setCategory(category);
+
+        NeedList needs = plant.getNeeds();
+        if(needs == null) {
+        	needs = new NeedList();
+        	plant.setNeeds(needs);
+        }
+        needs.addNeed(createNeed(needTitle));
 
         category.addPlant(plant);
         entityManager.merge(plant);
@@ -190,5 +224,13 @@ public class PlantBean {
 
 	public void setProtocolEntryText(String protocolEntryText) {
 		this.protocolEntryText = protocolEntryText;
+	}
+
+	public String getNeedTitle() {
+		return needTitle;
+	}
+
+	public void setNeedTitle(String needTitle) {
+		this.needTitle = needTitle;
 	}
 }

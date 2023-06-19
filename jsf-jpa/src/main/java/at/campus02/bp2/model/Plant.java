@@ -42,6 +42,10 @@ public class Plant implements Serializable{
     @JoinColumn(name = "protocol_id")
     private Protocol protocol;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "need_list_id")
+    private NeedList needs;
+	
 	public void addDemand(Demand demand){
 		demands.add(demand);
 	}
@@ -123,5 +127,13 @@ public class Plant implements Serializable{
     public void setProtocol(Protocol protocol) {
         this.protocol = protocol;
     }
+
+	public NeedList getNeeds() {
+		return needs;
+	}
+
+	public void setNeeds(NeedList needs) {
+		this.needs = needs;
+	}
 
 }
