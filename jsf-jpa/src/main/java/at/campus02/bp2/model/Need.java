@@ -13,6 +13,9 @@ public class Need {
     @Column(name = "entry_text")
     private String needTitle;
 
+    @Column(name = "reminder")
+    private LocalDateTime reminder;
+    
 	public int getId() {
 		return id;
 	}
@@ -28,4 +31,12 @@ public class Need {
 	public void setNeedTitle(String needTitle) {
 		this.needTitle = needTitle;
 	}
+
+	public LocalDateTime getReminder() {
+        return reminder;
+    }
+
+    public void setReminder(LocalDateTime reminder) {
+        this.reminder = reminder;
+    }
 }

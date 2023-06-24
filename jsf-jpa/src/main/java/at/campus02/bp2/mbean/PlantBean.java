@@ -36,6 +36,7 @@ public class PlantBean {
     private Integer selectedPlantId;
     private String protocolEntryText;
     private String needTitle;
+    private LocalDateTime reminder;
 
     public PlantBean(){
 
@@ -45,7 +46,7 @@ public class PlantBean {
         UploadedFile uploadedFile = (UploadedFile) event.getFile();
         newPlant.setImageData(uploadedFile.getContents());
     }
-
+    
     // Create a ProtocolEntry
     
     private ProtocolEntry createProtocolEntry(String entryText) {
@@ -80,15 +81,16 @@ public class PlantBean {
     
     // Create a ProtocolEntry
     
-    private Need createNeed(String needTitle) {
+    private Need createNeed(String needTitle, LocalDateTime reminder) {
         Need entry = new Need();
         entry.setNeedTitle(needTitle);
+        entry.setReminder(reminder);
         return entry;
     }
     
     // Add the ProtocolEntry to the Protocol
     
-    public void addNeed(Plant plant) {
+    public void addNeed(Plant plant, LocalDateTime reminder) {
     	EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         Category category = entityManager.find(Category.class, getSelectedCategoryId());
@@ -99,13 +101,13 @@ public class PlantBean {
         	needs = new NeedList();
         	plant.setNeeds(needs);
         }
-        needs.addNeed(createNeed(needTitle));
+        needs.addNeed(createNeed(needTitle, reminder));
 
         category.addPlant(plant);
         entityManager.merge(plant);
         transaction.commit();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                "Info", "Die Pflanze " + plant.getName() + " wurde gespeichert"));
+                "Reminder", "You have a new reminder: " + needTitle));
         setSelectedCategoryId(null);
     }
     
@@ -120,7 +122,7 @@ public class PlantBean {
         Protocol protocol = new Protocol();
         newPlant.setProtocol(protocol);
         protocol.addEntry(createProtocolEntry("Plant created"));
-
+        
         category.addPlant(newPlant);
         entityManager.persist(newPlant);
         transaction.commit();
@@ -232,5 +234,13 @@ public class PlantBean {
 
 	public void setNeedTitle(String needTitle) {
 		this.needTitle = needTitle;
+	}
+
+	public LocalDateTime getReminder() {
+		return reminder;
+	}
+
+	public void setReminder(LocalDateTime reminder) {
+		this.reminder = reminder;
 	}
 }

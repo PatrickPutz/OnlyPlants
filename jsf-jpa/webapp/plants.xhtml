@@ -14,6 +14,8 @@
         <p:menuitem value="Ort" icon="pi pi-flag"/>
     </p:menuButton>
 
+	<p:growl id="reminderGrowl" showDetail="true" sticky="true" autoUpdate="true" />
+
     <p:dataTable id="plantList" value="#{plantBean.plantList}" var="plant">
         <p:column>
             <f:facet name="header">
@@ -102,6 +104,10 @@
             <p:commandButton value="Bedürfnisse anzeigen" onclick="PF('needDialog_#{plant.id}').show();" />
             <p:dialog id="needDialog_#{plant.id}" header="Bedürfnisse für #{plant.name}" widgetVar="needDialog_#{plant.id}" modal="true" resizable="false">
                 <p:inputTextarea rows="6" cols="55" label="Bedürfnis" placeholder="Neues Bedürfnis" value="${plantBean.needTitle}"/> <br/>
+                <div class="field col-12 md:col-4">
+	                <p:outputLabel for="timeDe" value="Datum und Uhrzeit"/>
+	                <p:datePicker id="timeDe" value="#{calendarView.dateTimeDe}" showTime="true" locale="de" pattern="dd.MM.yyyy" />
+	            </div>
                 <p></p>
                	<p:commandButton value="Bedürfnis speichern" actionListener="${plantBean.addNeed(plant)}" update=""/>
                	<p></p>
@@ -127,5 +133,37 @@
         </p:selectOneMenu>
         <p:commandButton value="Speichern" actionListener="#{plantBean.save}" update="messages,plantList" oncomplete="PF('plantDialog').hide();" />
     </p:dialog>
+
+	<script>
+	    PrimeFaces.locales ['de'] = {
+	        closeText: 'Schließen',
+	        prevText: 'Zurück',
+	        nextText: 'Weiter',
+	        monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+	        monthNamesShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+	        dayNames: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+	        dayNamesShort: ['Son', 'Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam'],
+	        dayNamesMin: ['S', 'M', 'D', 'M ', 'D', 'F ', 'S'],
+	        weekHeader: 'Woche',
+	        firstDay: 1,
+	        isRTL: false,
+	        showMonthAfterYear: false,
+	        yearSuffix: '',
+	        timeOnlyTitle: 'Nur Zeit',
+	        timeText: 'Zeit',
+	        hourText: 'Stunde',
+	        minuteText: 'Minute',
+	        secondText: 'Sekunde',
+	        millisecondText: 'Millisekunde',
+	        currentText: 'Aktuelles Datum',
+	        ampm: false,
+	        month: 'Monat',
+	        week: 'Woche',
+	        day: 'Tag',
+	        allDayText: 'Ganzer Tag',
+	        today: 'Heute',
+	        clear: 'Löschen'
+	    };
+	</script>
 
 </ui:composition>
