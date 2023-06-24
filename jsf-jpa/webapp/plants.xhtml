@@ -7,6 +7,7 @@
 
     <ui:define name="header">
         Pflanzen
+        
     </ui:define>
 
     <p:menuButton value="Hinzufügen" buttonStyle="border-radius: 0 1rem">
@@ -171,5 +172,17 @@
 	        clear: 'Löschen'
 	    };
 	</script>
+
+	<style>
+	    .ui-analog-clock {
+	        width: 200px;
+	    }
+	</style>
+	
+	<div class="card">
+	    <h:form>
+	        <p:clock />
+	    </h:form>
+	</div>
 
 </ui:composition>
