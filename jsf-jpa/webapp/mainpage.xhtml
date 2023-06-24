@@ -17,10 +17,10 @@
 	</ui:define>
 
 	<div class="buttonbar">
-		<p:menuButton value="Hinzufügen" class="menubutton" buttonStyle="border-radius: 0 1rem" styleClass="menubutton">
-	        <p:menuitem value="Pflanze" icon="pi pi-filter"/>
-	        <p:menuitem value="Ort" icon="pi pi-flag"/>
-	    </p:menuButton>
+		<div class="action-buttons">
+			<p:commandButton value="+ Neue Pflanze" class="action-button" styleClass="action-button" />
+			<p:commandButton value="+ Neuer Ort" class="action-button" styleClass="action-button" />
+		</div>
 	</div>
 
 	<h:head>
@@ -45,17 +45,27 @@
 	        	background-color: #e6ddc7;
 	            width: 100%;
 	            margin-top: -25px;
+	            padding: 10px;
 	        }
-	        .menubutton{
-	        	padding: 10px;
+	        .action-buttons {
+	        	display: flex;
+	        	gap: 10px;
 	        }
-	        .menubutton .ui-button {
-	        	background-color: #91b398;
+	        .action-button {
+	        	background-color: #91b398 !important;
+	        	border: none;
 	        	border-color: #91b398;
+	        	color: #fff;
+	        	box-shadow: none !important;
 	        }
-	        .menubutton .ui-button:hover {
-	        	background-color: #7b9a80;
-	        	border-color: #7b9a80;
+	        .action-button:focus {
+	        	outline: none !important;
+	        }
+	        .action-button:focus-visible {
+	        	outline: none !important;
+	        }
+	        .action-button:hover {
+	        	background-color: #7b9a80 !important;
 	        }
 	    </style>
 	</h:head>
