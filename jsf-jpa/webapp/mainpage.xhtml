@@ -16,6 +16,13 @@
         </div>
 	</ui:define>
 
+	<div class="buttonbar">
+		<p:menuButton value="Hinzufügen" class="menubutton" buttonStyle="border-radius: 0 1rem" styleClass="menubutton">
+	        <p:menuitem value="Pflanze" icon="pi pi-filter"/>
+	        <p:menuitem value="Ort" icon="pi pi-flag"/>
+	    </p:menuButton>
+	</div>
+
 	<h:head>
 	    <style>
 	        .header {
@@ -25,7 +32,6 @@
 	            background-color: #e6ddc7;
 	            width: 100%;
 	        }
-	
 	        .logo {
 	            display: flex;
 	            align-items: center;
@@ -34,6 +40,22 @@
 	        .clock {
 	            font-family: Arial, sans-serif;
 	            padding-right: 25px;
+	        }
+	        .buttonbar {
+	        	background-color: #e6ddc7;
+	            width: 100%;
+	            margin-top: -25px;
+	        }
+	        .menubutton{
+	        	padding: 10px;
+	        }
+	        .menubutton .ui-button {
+	        	background-color: #91b398;
+	        	border-color: #91b398;
+	        }
+	        .menubutton .ui-button:hover {
+	        	background-color: #7b9a80;
+	        	border-color: #7b9a80;
 	        }
 	    </style>
 	</h:head>
