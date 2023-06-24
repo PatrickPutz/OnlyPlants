@@ -18,12 +18,48 @@
 
 	<div class="buttonbar">
 		<div class="action-buttons">
-			<p:commandButton value="+ Neue Pflanze" class="action-button" styleClass="action-button" 
+			<p:commandButton value="+ Neue Pflanze" class="action-button"
                              oncomplete="PF('plantDialog').show();" />
-			<p:commandButton value="+ Neuer Ort" class="action-button" styleClass="action-button" 
+			<p:commandButton value="+ Neuer Ort" class="action-button" 
                              oncomplete="PF('categoryDialog').show();" />
 		</div>
 	</div>
+
+	<p:accordionPanel id="plantPanel" multiple="true">
+	    <p:tab title="Alle Pflanzen">
+	        <p:carousel value="#{plantBean.plantList}" var="plant"
+	                    numVisible="#{plantBean.plantList.size() >= 3 ? 3 : plantBean.plantList.size()}"
+	                    circular="true" styleClass="plant-carousel">
+	            <p:panelGrid columns="1" style="width: 200px; margin-right: 10px;">
+	                <p:graphicImage name="images/onlyplants-icon.png" width="100" height="100" />
+	                <h:outputText value="#{plant.name}" />
+	                <h:outputText value="#{plant.type}" />
+	                <h:outputText value="#{plant.description}" />
+	                <h:outputText value="#{plant.category.name}" />
+	                <p:fieldset>
+	                    <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
+	                        <h:outputText styleClass="ui-icon pi pi-pencil" />
+	                    </p:commandLink>
+	                    <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
+	                        <h:outputText styleClass="ui-icon pi pi-trash" />
+	                    </p:commandLink>
+	                </p:fieldset>
+	            </p:panelGrid>
+	        </p:carousel>
+	    </p:tab>
+	</p:accordionPanel>
+
+    <h:body>
+        <p:dialog id="plantDialog" header="Neue Pflanze" widgetVar="plantDialog" modal="true" 
+                  showEffect="fade" hideEffect="fade">
+            
+        </p:dialog>
+        
+        <p:dialog id="categoryDialog" header="Neuer Ort" widgetVar="categoryDialog" modal="true" 
+                  showEffect="fade" hideEffect="fade">
+            
+        </p:dialog>
+    </h:body>
 
 	<h:head>
 	    <style>
@@ -38,60 +74,53 @@
 	            display: flex;
 	            align-items: center;
 	        }
-	
 	        .clock {
 	            font-family: Arial, sans-serif;
 	            padding-right: 25px;
 	        }
 	        .buttonbar {
-	        	background-color: #e6ddc7;
+	            background-color: #e6ddc7;
 	            width: 100%;
 	            margin-top: -25px;
 	            padding: 10px;
 	        }
 	        .action-buttons {
-	        	display: flex;
-	        	gap: 10px;
+	            display: flex;
+	            gap: 10px;
 	        }
 	        .action-button {
-	        	background-color: #91b398 !important;
-	        	border: none;
-	        	border-color: #91b398;
-	        	color: #fff;
-	        	box-shadow: none !important;
+	            background-color: #91b398 !important;
+	            border: none;
+	            border-color: #91b398;
+	            color: #fff;
+	            box-shadow: none !important;
 	        }
 	        .action-button:focus {
-	        	outline: none !important;
+	            outline: none !important;
 	        }
 	        .action-button:focus-visible {
-	        	outline: none !important;
+	            outline: none !important;
 	        }
 	        .action-button:hover {
-	        	background-color: #7b9a80 !important;
+	            background-color: #7b9a80 !important;
 	        }
-	        
-	        .ui-dialog-content {
-	            background-color: #e6ddc7 !important;
+	        .ui-accordion .ui-accordion-header {
+	            background-color: #7b9a80 !important;
+	            color: #fff;
+	            border: none !important;
 	        }
-	        .ui-dialog-titlebar {
-	            background-color: #e6ddc7 !important;
+	        .ui-accordion .ui-accordion-toggle-icon {
+	            color: #fff !important;
 	        }
-	        .ui-dialog-titlebar .ui-dialog-title {
-	            color: #333 !important;
+	        .ui-accordion .ui-accordion-content {
+	            background-color: #91b398 !important;
+	            color: #fff;
+	            border: none !important;
+	        }
+	        .ui-accordion .ui-accordion-header .ui-accordion-header-link {
+	            color: #fff !important;
 	        }
 	    </style>
 	</h:head>
-
-    <h:body>
-        <p:dialog id="plantDialog" header="Neue Pflanze" widgetVar="plantDialog" modal="true" 
-                  showEffect="fade" hideEffect="fade">
-            
-        </p:dialog>
-        
-        <p:dialog id="categoryDialog" header="Neuer Ort" widgetVar="categoryDialog" modal="true" 
-                  showEffect="fade" hideEffect="fade">
-            
-        </p:dialog>
-    </h:body>
 
 </ui:composition>
