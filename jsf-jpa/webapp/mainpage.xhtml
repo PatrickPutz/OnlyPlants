@@ -25,26 +25,30 @@
 		</div>
 	</div>
 
-	<p:accordionPanel id="plantPanel" multiple="true">
+	<p:accordionPanel id="plantPanel" multiple="true" styleClass="panel-accordion">
 	    <p:tab title="Alle Pflanzen">
 	        <p:carousel value="#{plantBean.plantList}" var="plant"
 	                    numVisible="#{plantBean.plantList.size() >= 3 ? 3 : plantBean.plantList.size()}"
 	                    circular="true" styleClass="plant-carousel">
-	            <p:panelGrid columns="1" style="width: 200px; margin-right: 10px;">
-	                <p:graphicImage name="images/onlyplants-icon.png" width="100" height="100" />
-	                <h:outputText value="#{plant.name}" />
-	                <h:outputText value="#{plant.type}" />
-	                <h:outputText value="#{plant.description}" />
-	                <h:outputText value="#{plant.category.name}" />
-	                <p:fieldset>
-	                    <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
-	                        <h:outputText styleClass="ui-icon pi pi-pencil" />
-	                    </p:commandLink>
-	                    <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
-	                        <h:outputText styleClass="ui-icon pi pi-trash" />
-	                    </p:commandLink>
-	                </p:fieldset>
-	            </p:panelGrid>
+	            <div class="rounded-panel">
+	                <div class="panel-content">
+	                    <p:panelGrid columns="1" style="margin-right: 10px;" columnClasses="centered-content">
+	                        <p:graphicImage name="images/onlyplants-icon.png" width="100" height="100" styleClass="circle-image" />
+	                        <h:outputText value="#{plant.name}" />
+	                        <h:outputText value="#{plant.type}" />
+	                        <h:outputText value="#{plant.description}" />
+	                        <h:outputText value="#{plant.category.name}" />
+	                        <p:fieldset>
+	                            <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
+	                                <h:outputText styleClass="ui-icon pi pi-pencil" />
+	                            </p:commandLink>
+	                            <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
+	                                <h:outputText styleClass="ui-icon pi pi-trash" />
+	                            </p:commandLink>
+	                        </p:fieldset>
+	                    </p:panelGrid>
+	                </div>
+	            </div>
 	        </p:carousel>
 	    </p:tab>
 	</p:accordionPanel>
@@ -120,6 +124,31 @@
 	        .ui-accordion .ui-accordion-header .ui-accordion-header-link {
 	            color: #fff !important;
 	        }
+	        .rounded-panel {
+			    border-radius: 10px;
+			    overflow: hidden;
+			}
+			.panel-content {
+			    padding: 10px;
+			    background-color: #ffffff;
+			    border-radius: 10px;
+			    text-align: center;
+			}	
+			.panel-accordion .ui-accordion-content {
+			    padding: 0;
+			}	
+			.panel-accordion .ui-accordion-content .rounded-panel {
+			    margin: 10px;
+			}	
+			.centered-content {
+			    text-align: center;
+			}			
+			.circle-image {
+			    border-radius: 50%;
+			}			
+			.panel-content table {
+			    width: 100%;
+			}
 	    </style>
 	</h:head>
 
