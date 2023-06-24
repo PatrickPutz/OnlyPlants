@@ -18,7 +18,8 @@
 
 	<div class="buttonbar">
 		<div class="action-buttons">
-			<p:commandButton value="+ Neue Pflanze" class="action-button" styleClass="action-button" />
+			<p:commandButton value="+ Neue Pflanze" class="action-button" styleClass="action-button" 
+                             oncomplete="PF('plantDialog').show();" />
 			<p:commandButton value="+ Neuer Ort" class="action-button" styleClass="action-button" />
 		</div>
 	</div>
@@ -69,5 +70,12 @@
 	        }
 	    </style>
 	</h:head>
+
+    <h:body>
+        <p:dialog id="plantDialog" header="Neue Pflanze" widgetVar="plantDialog" modal="true" 
+                  showEffect="fade" hideEffect="fade">
+
+        </p:dialog>
+    </h:body>
 
 </ui:composition>
