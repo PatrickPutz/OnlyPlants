@@ -39,11 +39,11 @@
                             <h:outputText value="#{plant.description}" />
                             <h:outputText value="#{plant.category.name}" />
                             <p:fieldset>
-                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
+                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" oncomplete="PF('editPlantDialog').show();">
                                     <h:outputText styleClass="ui-icon pi pi-pencil" />
                                 </p:commandLink>
-                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
-                                    <h:outputText styleClass="ui-icon pi pi-trash" />
+                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" actionListener="#{plantBean.deletePlant(plant)}">
+                                    <h:outputText styleClass="ui-icon pi pi-trash"  />
                                 </p:commandLink>
                             </p:fieldset>
                         </p:panelGrid>
@@ -73,6 +73,19 @@
                   showEffect="fade" hideEffect="fade">
 
         </p:dialog>
+        
+        <p:dialog id="editPlantDialog" header="Pflanze bearbeiten" widgetVar="editPlantDialog" modal="true" 
+          showEffect="fade" hideEffect="fade">
+		    <div style="display: flex; flex-direction: column;">
+		        <p:inputText label="Pflanzenname" placeholder="Neuer Name" style="margin-bottom: 10px;"/>
+		        <p:inputText label="Pflanzentyp" placeholder="Neue Gattung" style="margin-bottom: 10px;"/>
+		        <p:inputText label="Beschreibung" placeholder="Neue Beschreibung" style="margin-bottom: 10px;"/>
+		        <p:selectOneMenu label="Kategorie" style="margin-bottom: 10px;">
+		            <f:selectItems value="#{categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
+		        </p:selectOneMenu>
+		        <p:commandButton value="Speichern" styleClass="action-button" oncomplete="PF('editPlantDialog').hide();" style="margin-bottom: 10px;"/>            
+		    </div>
+		</p:dialog>        
     </h:body>
 
     <h:head>
