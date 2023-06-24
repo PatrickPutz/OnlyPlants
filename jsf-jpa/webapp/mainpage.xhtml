@@ -5,4 +5,36 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
 
+	<ui:define name="header">
+		<div class="header">
+            <div class="logo">
+            	<p:graphicImage name="images/headerbar.png" alt="logo"/>
+            </div>
+            <div class="clock">
+                <p:clock/>
+            </div>
+        </div>
+	</ui:define>
+
+	<h:head>
+	    <style>
+	        .header {
+	            display: flex;
+	            align-items: center;
+	            justify-content: space-between;
+	            background-color: #e6ddc7;
+	            width: 100%;
+	        }
+	
+	        .logo {
+	            display: flex;
+	            align-items: center;
+	        }
+	
+	        .clock {
+	            font-family: Arial, sans-serif;
+	        }
+	    </style>
+	</h:head>
+
 </ui:composition>
