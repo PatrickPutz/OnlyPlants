@@ -25,6 +25,35 @@
         </div>
     </div>
 
+    <p:accordionPanel id="categoryPanel" multiple="true" value="#{categoryBean.categoryList}" var="category" styleClass="panel-accordion">
+        <p:tab title="#{category.name}">
+            <p:carousel value="#{category.plants}" var="plant"
+                        numVisible="#{category.plants.size() >= 3 ? 3 : category.plants.size()}"
+                        circular="true" styleClass="plant-carousel">
+                <div class="rounded-panel">
+                    <div class="panel-content">
+                        <p:panelGrid columns="1" style="margin-right: 10px;" columnClasses="centered-content">
+                            <p:graphicImage name="images/onlyplants-icon.png" width="100" height="100" styleClass="circle-image" />
+                            <h:outputText value="#{plant.name}" />
+                            <h:outputText value="#{plant.type}" />
+                            <h:outputText value="#{plant.description}" />
+                            <p:fieldset>
+                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" onclick="PF('editPlantDialog').show();">
+                                    <h:outputText styleClass="ui-icon pi pi-pencil" />
+                                </p:commandLink>
+                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" actionListener="#{plantBean.deletePlant(plant)}">
+                                    <h:outputText styleClass="ui-icon pi pi-trash" />
+                                </p:commandLink>
+                            </p:fieldset>
+                        </p:panelGrid>
+                    </div>
+                </div>
+            </p:carousel>
+        </p:tab>
+    </p:accordionPanel>
+
+	<p></p>
+	
     <p:accordionPanel id="plantPanel" multiple="true" styleClass="panel-accordion">
         <p:tab title="Alle Pflanzen">
             <p:carousel value="#{plantBean.plantList}" var="plant"
@@ -65,14 +94,14 @@
                     <f:selectItems value="${categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
                 </p:selectOneMenu>
                 <p:commandButton value="Speichern" actionListener="${plantBean.save}" styleClass="action-button" 
-                                 update="messages,plantPanel" oncomplete="PF('plantDialog').hide();" style="margin-bottom: 10px;"/>            
+                                 update="messages,plantPanel,categoryPanel" oncomplete="PF('plantDialog').hide();" style="margin-bottom: 10px;"/>            
             </div>
         </p:dialog>
 
-        <p:dialog id="categoryDialog" header="Neuer Ort" widgetVar="categoryDialog" modal="true" 
-                  showEffect="fade" hideEffect="fade">
-
-        </p:dialog>
+        <p:dialog id="categoryDialog" header="Kategorie oder Ort anlegen" widgetVar="categoryDialog" modal="true" resizable="false">
+			<p:inputText label="Kategoriename" placeholder="Kategorie oder Ort" value="${categoryBean.newCategory.name}"/>
+			<p:commandButton value="Speichern" actionListener="${categoryBean.save}" update="messages,plantPanel,categoryPanel" oncomplete="PF('categoryDialog').hide();" />
+		</p:dialog>
         
         <p:dialog id="editPlantDialog" header="Pflanze bearbeiten" widgetVar="editPlantDialog" modal="true" 
           showEffect="fade" hideEffect="fade">
