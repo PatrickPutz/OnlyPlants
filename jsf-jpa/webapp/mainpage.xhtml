@@ -100,7 +100,7 @@
 
         <p:dialog id="categoryDialog" header="Kategorie oder Ort anlegen" widgetVar="categoryDialog" modal="true" resizable="false">
 			<p:inputText label="Kategoriename" placeholder="Kategorie oder Ort" value="${categoryBean.newCategory.name}"/>
-			<p:commandButton value="Speichern" actionListener="${categoryBean.save}" update="messages,plantPanel,categoryPanel" oncomplete="PF('categoryDialog').hide();" />
+			<p:commandButton value="Speichern" actionListener="${categoryBean.save}" update="messages,plantPanel,categoryPanel" styleClass="action-button" style="margin-left: 10px;" oncomplete="PF('categoryDialog').hide();" />
 		</p:dialog>
         
         <p:dialog id="editPlantDialog" header="Pflanze bearbeiten" widgetVar="editPlantDialog" modal="true" 
