@@ -2,6 +2,7 @@ package at.campus02.bp2.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "Need")
@@ -39,4 +40,12 @@ public class Need {
     public void setReminder(LocalDateTime reminder) {
         this.reminder = reminder;
     }
+    
+    public String formatDateTime(LocalDateTime localDateTime) {
+    	if(localDateTime == null)
+    		return "";
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    	return localDateTime.format(formatter);
+    }
+    
 }

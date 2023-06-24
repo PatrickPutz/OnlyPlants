@@ -118,6 +118,12 @@
                         </f:facet>
                         <h:outputText value="#{need.needTitle}" />
                     </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Erinnerung" />
+                        </f:facet>
+                        <h:outputText value="#{need.formatDateTime(need.reminder)}" />
+                    </p:column>
                 </p:dataTable>
             </p:dialog>
         </p:column>
