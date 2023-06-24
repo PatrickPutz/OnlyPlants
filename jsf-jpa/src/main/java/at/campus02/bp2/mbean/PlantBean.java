@@ -90,7 +90,7 @@ public class PlantBean {
     
     // Add the ProtocolEntry to the Protocol
     
-    public void addNeed(Plant plant, LocalDateTime reminder) {
+    public void addNeed(Plant plant) {
     	EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         Category category = entityManager.find(Category.class, getSelectedCategoryId());
@@ -101,7 +101,7 @@ public class PlantBean {
         	needs = new NeedList();
         	plant.setNeeds(needs);
         }
-        needs.addNeed(createNeed(needTitle, reminder));
+        needs.addNeed(createNeed(needTitle, LocalDateTime.now().plusMinutes(1)));
 
         category.addPlant(plant);
         entityManager.merge(plant);

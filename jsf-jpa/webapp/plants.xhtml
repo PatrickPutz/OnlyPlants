@@ -106,7 +106,7 @@
                 <p:inputTextarea rows="6" cols="55" label="Bedürfnis" placeholder="Neues Bedürfnis" value="${plantBean.needTitle}"/> <br/>
                 <div class="field col-12 md:col-4">
 	                <p:outputLabel for="timeDe" value="Datum und Uhrzeit"/>
-	                <p:datePicker id="timeDe" value="#{calendarView.dateTimeDe}" showTime="true" locale="de" pattern="dd.MM.yyyy" />
+	                <p:datePicker id="timeDe" showTime="true" locale="de" pattern="dd.MM.yyyy"/>
 	            </div>
                 <p></p>
                	<p:commandButton value="Bedürfnis speichern" actionListener="${plantBean.addNeed(plant)}" update=""/>
