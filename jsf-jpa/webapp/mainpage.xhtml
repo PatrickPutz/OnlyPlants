@@ -55,8 +55,18 @@
 
     <h:body>
         <p:dialog id="plantDialog" header="Neue Pflanze" widgetVar="plantDialog" modal="true" 
-                  showEffect="fade" hideEffect="fade">
-            
+		          showEffect="fade" hideEffect="fade" style="background-color: #e6ddc7;">
+		    <div style="display: flex; flex-direction: column;">
+			    <p:fileUpload label="Bild" fileUploadListener="#{plantBean.handleImageUpload}" mode="advanced" dragDropSupport="false" styleClass="action-button" />
+			    <p:inputText label="Pflanzenname" placeholder="Pflanzenname" value="${plantBean.newPlant.name}"/>
+			    <p:inputText label="Pflanzentyp" placeholder="Pflanzentyp" value="${plantBean.newPlant.type}"/>
+			    <p:inputText label="Beschreibung" placeholder="Beschreibung" value="${plantBean.newPlant.description}"/>
+			    <p:selectOneMenu label="Kategorie" value="${plantBean.selectedCategoryId}">
+			        <f:selectItems value="${categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
+			    </p:selectOneMenu>
+			    <p:commandButton value="Speichern" actionListener="${plantBean.save}" styleClass="action-button" 
+                 update="messages,plantPanel" oncomplete="PF('plantDialog').hide();" />            
+        	</div>
         </p:dialog>
         
         <p:dialog id="categoryDialog" header="Neuer Ort" widgetVar="categoryDialog" modal="true" 
@@ -92,22 +102,25 @@
 	            display: flex;
 	            gap: 10px;
 	        }
-	        .action-button {
-	            background-color: #91b398 !important;
-	            border: none;
-	            border-color: #91b398;
-	            color: #fff;
-	            box-shadow: none !important;
-	        }
-	        .action-button:focus {
-	            outline: none !important;
-	        }
-	        .action-button:focus-visible {
-	            outline: none !important;
-	        }
-	        .action-button:hover {
-	            background-color: #7b9a80 !important;
-	        }
+			.action-button {
+			    background-color: #91b398 !important;
+			    border: none;
+			    border-color: #91b398;
+			    color: #fff;
+			    box-shadow: none !important;
+			}
+			
+			.action-button:focus {
+			    outline: none !important;
+			}
+			
+			.action-button:focus-visible {
+			    outline: none !important;
+			}
+			
+			.action-button:hover {
+			    background-color: #7b9a80 !important;
+			}
 	        .ui-accordion .ui-accordion-header {
 	            background-color: #7b9a80 !important;
 	            color: #fff;
