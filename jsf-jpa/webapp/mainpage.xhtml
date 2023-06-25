@@ -96,10 +96,10 @@
 							        <p:commandButton value="Speichern" styleClass="action-button" actionListener="#{plantBean.updatePlant(plant)}" oncomplete="PF('editPlantDialog').hide();" style="margin-bottom: 10px;"/>            
 							    </div>
 							</p:dialog> 
-                            <p:dialog id="protocolDialog_#{plant.id}" header="Protokoll für #{plant.name}" width="80%" widgetVar="protocolDialog_#{plant.id}" modal="false" resizable="true">
+                            <p:dialog id="protocolDialog_#{plant.id}" header="Protokoll für #{plant.name}" width="80%" height="80%" widgetVar="protocolDialog_#{plant.id}" modal="false" resizable="true">
 								<p:inputTextarea rows="2" cols="55" label="Protokolleintrag" placeholder="Neuer Eintrag" value="${plantBean.protocolEntryText}"/> <br/>
 				                <p></p>
-				               	<p:commandButton value="Eintrag speichern" actionListener="${plantBean.addProtocolEntry(plant)}" update=""/>
+				               	<p:commandButton value="Eintrag speichern" actionListener="${plantBean.addProtocolEntry(plant)}" update="" styleClass="action-button" />
 				               	<p></p>
 								<p:dataTable id="protocolTable_#{plant.id}" value="#{plant.protocol.entries}" var="entry">
 									<p:column>
@@ -116,7 +116,29 @@
 				                    </p:column>
 								</p:dataTable>
 							</p:dialog>
-							<p:dialog id="needDialog_#{plant.id}" header="Bedürfnisse für #{plant.name}" widgetVar="needDialog_#{plant.id}" modal="false" resizable="true">
+							<p:dialog id="needDialog_#{plant.id}" header="Bedürfnisse für #{plant.name}" width="80%" height="80%" widgetVar="needDialog_#{plant.id}" modal="false" resizable="true">
+								 <p:inputTextarea rows="2" cols="55" label="Bedürfnis" placeholder="Neues Bedürfnis" value="${plantBean.needTitle}"/> <br/>
+				                <div class="field col-12 md:col-4">
+					                <p:outputLabel for="timeDe" value="Datum und Uhrzeit"/> <br/>
+					                <p:datePicker id="timeDe" showTime="true" locale="de" pattern="dd.MM.yyyy"/>
+					            </div>
+				                <p></p>
+				               	<p:commandButton value="Bedürfnis speichern" actionListener="${plantBean.addNeed(plant)}" update="" styleClass="action-button" />
+				               	<p></p>
+				                <p:dataTable id="needTable_#{plant.id}" value="#{plant.needs.needs}" var="need">
+				                    <p:column>
+				                        <f:facet name="header">
+				                            <h:outputText value="Bedürfnis" />
+				                        </f:facet>
+				                        <h:outputText value="#{need.needTitle}" />
+				                    </p:column>
+				                    <p:column>
+				                        <f:facet name="header">
+				                            <h:outputText value="Erinnerung" />
+				                        </f:facet>
+				                        <h:outputText value="#{need.formatDateTime(need.reminder)}" />
+				                    </p:column>
+				                </p:dataTable>
 							</p:dialog>
                         </p:panelGrid>
                     </div>
