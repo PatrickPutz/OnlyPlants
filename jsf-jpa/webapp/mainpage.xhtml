@@ -210,7 +210,7 @@
 			                </p:dataTable>
 			            </p:dialog>
 			            <p></p>
-			            <p:commandButton value="Bedürfnisse anzeigen" onclick="PF('needDialogDetail_#{plant.id}').show();" styleClass="action-button"/>
+			            <p:commandButton value="Bedürfnisse verwalten" onclick="PF('needDialogDetail_#{plant.id}').show();" styleClass="action-button"/>
 				            <p:dialog id="needDialogDetail_#{plant.id}" header="Bedürfnisse für #{plant.name}" widgetVar="needDialogDetail_#{plant.id}" modal="true" resizable="false">
 				                <p:inputTextarea rows="6" cols="55" label="Bedürfnis" placeholder="Neues Bedürfnis" value="${plantBean.needTitle}"/> <br/>
 				                <div class="field col-12 md:col-4">
