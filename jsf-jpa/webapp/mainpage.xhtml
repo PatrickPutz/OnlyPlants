@@ -37,15 +37,18 @@
                             <h:outputText value="#{plant.name}" />
                             <h:outputText value="#{plant.type}" />
                             <h:outputText value="#{plant.description}" />
-                            <p:fieldset>
+							<p:fieldset>
                                 <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" actionListener="#{plantBean.deletePlant(plant)}">
-                                    <h:outputText styleClass="ui-icon pi pi-trash" />
+                                    <h:outputText styleClass="ui-icon pi pi-trash"  />
                                 </p:commandLink>
-                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" onclick="PF('editPlantDialog').show();">
+                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" oncomplete="PF('editPlantDialog_#{plant.id}').show();">
                                     <h:outputText styleClass="ui-icon pi pi-pencil" />
                                 </p:commandLink>
-                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
+                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" oncomplete="PF('protocolDialog_#{plant.id}').show();">
                                     <h:outputText styleClass="ui-icon pi pi-book" />
+                                </p:commandLink>
+                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" oncomplete="PF('needDialog_#{plant.id}').show();">
+                                    <h:outputText styleClass="ui-icon pi pi-heart" />
                                 </p:commandLink>
                             </p:fieldset>
                         </p:panelGrid>
