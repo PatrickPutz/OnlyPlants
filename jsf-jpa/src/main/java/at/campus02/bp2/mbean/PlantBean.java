@@ -69,7 +69,7 @@ public class PlantBean {
             protocol = new Protocol();
             plant.setProtocol(protocol);
         }
-        protocol.addEntry(createProtocolEntry(protocolEntryText));
+        protocol.addEntry(createProtocolEntry(getProtocolEntryText()));
 
         category.addPlant(plant);
         entityManager.merge(plant);
@@ -97,11 +97,12 @@ public class PlantBean {
         plant.setCategory(category);
 
         NeedList needs = plant.getNeeds();
-        if(needs == null) {
-        	needs = new NeedList();
-        	plant.setNeeds(needs);
+        if (needs == null) {
+            needs = new NeedList();
+            plant.setNeeds(needs);
         }
-        needs.addNeed(createNeed(needTitle, LocalDateTime.now().plusMinutes(1)));
+
+        needs.addNeed(createNeed(getNeedTitle(), LocalDateTime.now().plusMinutes(1)));
 
         category.addPlant(plant);
         entityManager.merge(plant);
