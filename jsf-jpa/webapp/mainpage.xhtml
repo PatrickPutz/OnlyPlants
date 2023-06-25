@@ -77,10 +77,12 @@
                                 <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" oncomplete="PF('editPlantDialog').show();">
                                     <h:outputText styleClass="ui-icon pi pi-pencil" />
                                 </p:commandLink>
-                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
+                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" oncomplete="PF('protocolDialog_#{plant.id}').show();">
                                     <h:outputText styleClass="ui-icon pi pi-book" />
                                 </p:commandLink>
                             </p:fieldset>
+                            <p:dialog id="protocolDialog_#{plant.id}" header="Protokoll für #{plant.name}" widgetVar="protocolDialog_#{plant.id}" modal="false" resizable="false">
+							</p:dialog>
                         </p:panelGrid>
                     </div>
                 </div>
