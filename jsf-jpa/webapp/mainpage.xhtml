@@ -80,6 +80,9 @@
                                 <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" oncomplete="PF('protocolDialog_#{plant.id}').show();">
                                     <h:outputText styleClass="ui-icon pi pi-book" />
                                 </p:commandLink>
+                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" oncomplete="PF('needDialog_#{plant.id}').show();">
+                                    <h:outputText styleClass="ui-icon pi pi-heart" />
+                                </p:commandLink>
                             </p:fieldset>
                             <p:dialog id="editPlantDialog_#{plant.id}" header="Pflanze bearbeiten" widgetVar="editPlantDialog_#{plant.id}" modal="false" 
 					          showEffect="fade" hideEffect="fade">
@@ -112,6 +115,8 @@
 				                        <h:outputText value="#{entry.entryText}" />
 				                    </p:column>
 								</p:dataTable>
+							</p:dialog>
+							<p:dialog id="needDialog_#{plant.id}" header="Bedürfnisse für #{plant.name}" widgetVar="needDialog_#{plant.id}" modal="false" resizable="true">
 							</p:dialog>
                         </p:panelGrid>
                     </div>
