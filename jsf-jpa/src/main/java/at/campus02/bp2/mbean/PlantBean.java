@@ -61,8 +61,6 @@ public class PlantBean {
     public void addProtocolEntry(Plant plant) {
     	EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        Category category = entityManager.find(Category.class, getSelectedCategoryId());
-        plant.setCategory(category);
 
         Protocol protocol = plant.getProtocol();
         if (protocol == null) {
@@ -71,7 +69,6 @@ public class PlantBean {
         }
         protocol.addEntry(createProtocolEntry(getProtocolEntryText()));
 
-        category.addPlant(plant);
         entityManager.merge(plant);
         transaction.commit();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -93,8 +90,6 @@ public class PlantBean {
     public void addNeed(Plant plant) {
     	EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        Category category = entityManager.find(Category.class, getSelectedCategoryId());
-        plant.setCategory(category);
 
         NeedList needs = plant.getNeeds();
         if (needs == null) {
@@ -104,7 +99,6 @@ public class PlantBean {
 
         needs.addNeed(createNeed(getNeedTitle(), LocalDateTime.now().plusMinutes(1)));
 
-        category.addPlant(plant);
         entityManager.merge(plant);
         transaction.commit();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
