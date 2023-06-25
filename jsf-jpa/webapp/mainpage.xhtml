@@ -150,6 +150,96 @@
         </p:tab>
     </p:accordionPanel>
 
+	<p></p>
+	
+    <p:accordionPanel id="masterPanel" multiple="true" styleClass="panel-accordion">
+    	 <p:tab title="Detailansicht">
+    	 	<p:dataTable id="plantList" value="#{plantBean.plantList}" var="plant">
+    	 		<p:column>
+    	 			<f:facet name="header">
+    	 				<h:outputText value="Name"/>
+    	 			</f:facet>
+    	 			<p:inputText label="editedName" value="#{plant.name}" placeholder="Name"/>
+    	 		</p:column>
+    	 		<p:column>
+    	 			<f:facet name="header">
+    	 				<h:outputText value="Bezeichnung"/>
+    	 			</f:facet>
+    	 			<p:inputText label="editedType" value="#{plant.type}" placeholder="Typ"/>
+    	 		</p:column>
+    	 		<p:column>
+    	 			<f:facet name="header">
+    	 				<h:outputText value="Beschreibung"/>
+    	 			</f:facet>
+    	 			<p:inputText label="editedDescription" value="#{plant.description}" placeholder="Beschreibung"/>
+    	 		</p:column>
+    	 		<p:column>
+    	 			<f:facet name="header">
+    	 				<h:outputText value="Kategorie"/>
+    	 			</f:facet>
+    	 			<p:selectOneMenu label="Kategorie" value="#{plant.category.id}">
+		                <f:selectItems value="#{categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
+		            </p:selectOneMenu>
+    	 		</p:column>
+    	 		<p:column>
+    	 			<f:facet name="header">
+    	 				<h:outputText value="Aktionen"/>
+    	 			</f:facet>
+    	 			<p:commandButton value="Speichern" actionListener="#{plantBean.updatePlant(plant)}" update="plantList" styleClass="action-button" style="margin-right: 10px;"/>     	 			
+    	 			<p:commandButton value="Löschen" actionListener="#{plantBean.deletePlant(plant)}" update="plantList" styleClass="action-button" />
+    	 			<p></p>
+    	 			<p:commandButton value="Protokoll verwalten" onclick="PF('protocolDialogDetail_#{plant.id}').show();" styleClass="action-button"/>
+			            <p:dialog id="protocolDialogDetail_#{plant.id}" header="Protokoll für #{plant.name}" widgetVar="protocolDialogDetail_#{plant.id}" modal="true" resizable="false">
+			                <p:inputTextarea rows="2" cols="55" label="Protokolleintrag" placeholder="Neuer Eintrag" value="${plantBean.protocolEntryText}"/> <br/>
+			                <p></p>
+			               	<p:commandButton value="Eintrag speichern" actionListener="${plantBean.addProtocolEntry(plant)}" update=""/>
+			               	<p></p>
+			                <p:dataTable id="protocolTableDetail_#{plant.id}" value="#{plant.protocol.entries}" var="entry">
+			                    <p:column>
+			                        <f:facet name="header">
+			                            <h:outputText value="Timestamp" />
+			                        </f:facet>
+			                        <h:outputText value="#{entry.timestamp}" />
+			                    </p:column>
+			                    <p:column>
+			                        <f:facet name="header">
+			                            <h:outputText value="Eintrag" />
+			                        </f:facet>
+			                        <h:outputText value="#{entry.entryText}" />
+			                    </p:column>
+			                </p:dataTable>
+			            </p:dialog>
+			            <p></p>
+			            <p:commandButton value="Bedürfnisse anzeigen" onclick="PF('needDialogDetail_#{plant.id}').show();" styleClass="action-button"/>
+				            <p:dialog id="needDialogDetail_#{plant.id}" header="Bedürfnisse für #{plant.name}" widgetVar="needDialogDetail_#{plant.id}" modal="true" resizable="false">
+				                <p:inputTextarea rows="6" cols="55" label="Bedürfnis" placeholder="Neues Bedürfnis" value="${plantBean.needTitle}"/> <br/>
+				                <div class="field col-12 md:col-4">
+					                <p:outputLabel for="timeDe" value="Datum und Uhrzeit"/>
+					                <p:datePicker id="timeDe" showTime="true" locale="de" pattern="dd.MM.yyyy"/>
+					            </div>
+				                <p></p>
+				               	<p:commandButton value="Bedürfnis speichern" actionListener="${plantBean.addNeed(plant)}" update=""/>
+				               	<p></p>
+				                <p:dataTable id="needTable_#{plant.id}" value="#{plant.needs.needs}" var="need">
+				                    <p:column>
+				                        <f:facet name="header">
+				                            <h:outputText value="Bedürfnis" />
+				                        </f:facet>
+				                        <h:outputText value="#{need.needTitle}" />
+				                    </p:column>
+				                    <p:column>
+				                        <f:facet name="header">
+				                            <h:outputText value="Erinnerung" />
+				                        </f:facet>
+				                        <h:outputText value="#{need.formatDateTime(need.reminder)}" />
+				                    </p:column>
+				                </p:dataTable>
+				            </p:dialog>
+	    	 		</p:column>
+	    	 	</p:dataTable>
+	    	 </p:tab>
+    </p:accordionPanel>
+
     <h:body>
         <p:dialog id="plantDialog" header="Neue Pflanze" widgetVar="plantDialog" modal="true" 
                   showEffect="fade" hideEffect="fade" style="background-color: #e6ddc7; min-width: 400px;">
