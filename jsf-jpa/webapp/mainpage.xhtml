@@ -84,7 +84,8 @@
                                     <h:outputText styleClass="ui-icon pi pi-heart" />
                                 </p:commandLink>
                             </p:fieldset>
-                            <p:dialog id="editPlantDialog_#{plant.id}" header="Pflanze bearbeiten" widgetVar="editPlantDialog_#{plant.id}" modal="false" 
+                        </p:panelGrid>
+                        <p:dialog id="editPlantDialog_#{plant.id}" header="Pflanze bearbeiten" widgetVar="editPlantDialog_#{plant.id}" modal="false" 
 					          showEffect="fade" hideEffect="fade">
 							    <div style="display: flex; flex-direction: column;">
 							        <p:inputText label="Pflanzenname" placeholder="Neuer Name" value="#{plant.name}" style="margin-bottom: 10px;"/>
@@ -117,7 +118,7 @@
 								</p:dataTable>
 							</p:dialog>
 							<p:dialog id="needDialog_#{plant.id}" header="Bedürfnisse für #{plant.name}" width="80%" height="80%" widgetVar="needDialog_#{plant.id}" modal="false" resizable="true">
-								 <p:inputTextarea rows="2" cols="55" label="Bedürfnis" placeholder="Neues Bedürfnis" value="${plantBean.needTitle}"/> <br/>
+								<p:inputTextarea rows="2" cols="55" label="Bedürfnis" placeholder="Neues Bedürfnis" value="${plantBean.needTitle}"/> <br/>
 				                <div class="field col-12 md:col-4">
 					                <p:outputLabel for="timeDe" value="Datum und Uhrzeit"/> <br/>
 					                <p:datePicker id="timeDe" showTime="true" locale="de" pattern="dd.MM.yyyy"/>
@@ -140,7 +141,6 @@
 				                    </p:column>
 				                </p:dataTable>
 							</p:dialog>
-                        </p:panelGrid>
                     </div>
                 </div>
             </p:carousel>
