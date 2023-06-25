@@ -81,7 +81,25 @@
                                     <h:outputText styleClass="ui-icon pi pi-book" />
                                 </p:commandLink>
                             </p:fieldset>
-                            <p:dialog id="protocolDialog_#{plant.id}" header="Protokoll für #{plant.name}" widgetVar="protocolDialog_#{plant.id}" modal="false" resizable="false">
+                            <p:dialog id="protocolDialog_#{plant.id}" header="Protokoll für #{plant.name}" width="80%" widgetVar="protocolDialog_#{plant.id}" modal="false" resizable="true">
+								<p:inputTextarea rows="2" cols="55" label="Protokolleintrag" placeholder="Neuer Eintrag" value="${plantBean.protocolEntryText}"/> <br/>
+				                <p></p>
+				               	<p:commandButton value="Eintrag speichern" actionListener="${plantBean.addProtocolEntry(plant)}" update=""/>
+				               	<p></p>
+								<p:dataTable id="protocolTable_#{plant.id}" value="#{plant.protocol.entries}" var="entry">
+									<p:column>
+				                        <f:facet name="header">
+				                            <h:outputText value="Timestamp" />
+				                        </f:facet>
+				                        <h:outputText value="#{entry.timestamp}" />
+				                    </p:column>
+				                    <p:column>
+				                        <f:facet name="header">
+				                            <h:outputText value="Eintrag" />
+				                        </f:facet>
+				                        <h:outputText value="#{entry.entryText}" />
+				                    </p:column>
+								</p:dataTable>
 							</p:dialog>
                         </p:panelGrid>
                     </div>
