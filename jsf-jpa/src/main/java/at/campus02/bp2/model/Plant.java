@@ -1,5 +1,6 @@
 package at.campus02.bp2.model;
 
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -11,6 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Lob;
@@ -46,6 +51,11 @@ public class Plant implements Serializable{
     @JoinColumn(name = "need_list_id")
     private NeedList needs;
 	
+	
+	 
+	 
+	 
+	 
 	public void addDemand(Demand demand){
 		demands.add(demand);
 	}

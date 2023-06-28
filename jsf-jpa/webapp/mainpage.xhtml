@@ -1,359 +1,489 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui"
-                template="/WEB-INF/template.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
-    <ui:define name="header">
-        <div class="header">
-            <div class="logo">
-                <p:graphicImage name="images/headerbar.png" alt="logo" height="80px"/>
-            </div>
-            <div class="clock">
-                <p:clock/>
-            </div>
-        </div>
-    </ui:define>
+	<ui:define name="header">
+		<div class="header">
+			<div class="logo">
+				<p:graphicImage name="images/headerbar.png" alt="logo" height="80px" />
+			</div>
+			<div class="clock">
+				<p:clock />
+			</div>
+		</div>
+	</ui:define>
 
-    <div class="buttonbar">
-        <div class="action-buttons">
-            <p:commandButton value="+ Neue Pflanze" class="action-button"
-                             oncomplete="PF('plantDialog').show();" />
-            <p:commandButton value="+ Neuer Ort" class="action-button" 
-                             oncomplete="PF('categoryDialog').show();" />
-        </div>
-    </div>
+	<div class="buttonbar">
+		<div class="action-buttons">
+			<p:commandButton value="+ Neue Pflanze" class="action-button"
+				oncomplete="PF('plantDialog').show();" />
+			<p:commandButton value="+ Neuer Ort" class="action-button"
+				oncomplete="PF('categoryDialog').show();" />
+		</div>
+	</div>
 
-    <p:accordionPanel id="categoryPanel" multiple="true" value="#{categoryBean.categoryList}" var="category" styleClass="panel-accordion">
-        <p:tab title="#{category.name}">
-            <p:carousel value="#{category.plants}" var="plant"
-                        numVisible="#{category.plants.size() >= 3 ? 3 : category.plants.size()}"
-                        circular="true" styleClass="plant-carousel">
-                <div class="rounded-panel">
-                    <div class="panel-content">
-                        <p:panelGrid columns="1" style="margin-right: 10px;" columnClasses="centered-content">
-                            <p:graphicImage name="images/onlyplants-icon.png" width="100" height="100" styleClass="circle-image" />
-                            <h:outputText value="#{plant.name}" />
-                            <h:outputText value="#{plant.type}" />
-                            <h:outputText value="#{plant.description}" />
+	<p:accordionPanel id="categoryPanel" multiple="true"
+		value="#{categoryBean.categoryList}" var="category"
+		styleClass="panel-accordion">
+		<p:tab title="#{category.name}">
+			<p:carousel value="#{category.plants}" var="plant"
+				numVisible="#{category.plants.size() >= 3 ? 3 : category.plants.size()}"
+				circular="true" styleClass="plant-carousel">
+				<div class="rounded-panel">
+					<div class="panel-content">
+						<p:panelGrid columns="1" style="margin-right: 10px;"
+							columnClasses="centered-content">	
+								<p:graphicImage cache="false"
+                                        rendered="#{not empty plant.imageData}"
+                                        value="#{plantBean.image}" width="100" height="100" styleClass="circle-image" >
+                            	<f:param name="id" value="#{plant.id}"/>           
+                            </p:graphicImage>
+					<h:outputText value="#{plant.name}" />
+							<h:outputText value="#{plant.type}" />
+							<h:outputText value="#{plant.description}" />
 							<p:fieldset>
-                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" actionListener="#{plantBean.deletePlant(plant)}">
-                                    <h:outputText styleClass="ui-icon pi pi-trash"  />
-                                </p:commandLink>
-                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" oncomplete="PF('editPlantDialog_#{plant.id}').show();">
-                                    <h:outputText styleClass="ui-icon pi pi-pencil" />
-                                </p:commandLink>
-                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" oncomplete="PF('protocolDialog_#{plant.id}').show();">
-                                    <h:outputText styleClass="ui-icon pi pi-book" />
-                                </p:commandLink>
-                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" oncomplete="PF('needDialog_#{plant.id}').show();">
-                                    <h:outputText styleClass="ui-icon pi pi-heart" />
-                                </p:commandLink>
-                            </p:fieldset>
-                        </p:panelGrid>
-                    </div>
-                </div>
-            </p:carousel>
-        </p:tab>
-    </p:accordionPanel>
+								<p:commandLink
+									styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"
+									actionListener="#{plantBean.deletePlant(plant)}">
+									<h:outputText styleClass="ui-icon pi pi-trash" />
+								</p:commandLink>
+								<p:commandLink
+									styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"
+									oncomplete="PF('editPlantDialog_#{plant.id}').show();">
+									<h:outputText styleClass="ui-icon pi pi-pencil" />
+								</p:commandLink>
+								<p:commandLink
+									styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"
+									oncomplete="PF('protocolDialog_#{plant.id}').show();">
+									<h:outputText styleClass="ui-icon pi pi-book" />
+								</p:commandLink>
+								<p:commandLink
+									styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"
+									oncomplete="PF('needDialog_#{plant.id}').show();">
+									<h:outputText styleClass="ui-icon pi pi-heart" />
+								</p:commandLink>
+							</p:fieldset>
+						</p:panelGrid>
+					</div>
+				</div>
+			</p:carousel>
+		</p:tab>
+	</p:accordionPanel>
 
 	<p></p>
-	
-    <p:accordionPanel id="plantPanel" multiple="true" styleClass="panel-accordion">
-        <p:tab title="Alle Pflanzen">
-            <p:carousel value="#{plantBean.plantList}" var="plant"
-                        numVisible="#{plantBean.plantList.size() >= 3 ? 3 : plantBean.plantList.size()}"
-                        circular="true" styleClass="plant-carousel">
-                <div class="rounded-panel">
-                    <div class="panel-content">
-                        <p:panelGrid columns="1" style="margin-right: 10px;" columnClasses="centered-content">
-                            <p:graphicImage name="images/onlyplants-icon.png" width="100" height="100" styleClass="circle-image" />
-                            <h:outputText value="#{plant.name}" />
-                            <h:outputText value="#{plant.type}" />
-                            <h:outputText value="#{plant.description}" />
-                            <h:outputText value="#{plant.category.name}" />
-                            <p:fieldset>
-                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" actionListener="#{plantBean.deletePlant(plant)}">
-                                    <h:outputText styleClass="ui-icon pi pi-trash"  />
-                                </p:commandLink>
-                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" oncomplete="PF('editPlantDialog_#{plant.id}').show();">
-                                    <h:outputText styleClass="ui-icon pi pi-pencil" />
-                                </p:commandLink>
-                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" oncomplete="PF('protocolDialog_#{plant.id}').show();">
-                                    <h:outputText styleClass="ui-icon pi pi-book" />
-                                </p:commandLink>
-                                <p:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" oncomplete="PF('needDialog_#{plant.id}').show();">
-                                    <h:outputText styleClass="ui-icon pi pi-heart" />
-                                </p:commandLink>
-                            </p:fieldset>
-                        </p:panelGrid>
-                        <p:dialog id="editPlantDialog_#{plant.id}" header="Pflanze bearbeiten" widgetVar="editPlantDialog_#{plant.id}" modal="false" 
-					          showEffect="fade" hideEffect="fade">
-							    <div style="display: flex; flex-direction: column;">
-							        <p:inputText label="Pflanzenname" placeholder="Neuer Name" value="#{plant.name}" style="margin-bottom: 10px;"/>
-							        <p:inputText label="Pflanzentyp" placeholder="Neue Gattung" value="#{plant.type}" style="margin-bottom: 10px;"/>
-							        <p:inputText label="Beschreibung" placeholder="Neue Beschreibung" value="#{plant.description}" style="margin-bottom: 10px;"/>
-							        <p:selectOneMenu label="Kategorie" value="#{plantBean.selectedCategoryId}" style="margin-bottom: 10px;">
-							            <f:selectItems value="#{categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
-							        </p:selectOneMenu>
-							        <p:commandButton value="Speichern" styleClass="action-button" actionListener="#{plantBean.updatePlant(plant)}" oncomplete="PF('editPlantDialog').hide();" style="margin-bottom: 10px;"/>            
-							    </div>
-							</p:dialog> 
-                            <p:dialog id="protocolDialog_#{plant.id}" header="Protokoll für #{plant.name}" width="80%" height="80%" widgetVar="protocolDialog_#{plant.id}" modal="false" resizable="true">
-								<p:inputTextarea rows="2" cols="55" label="Protokolleintrag" placeholder="Neuer Eintrag" value="${plantBean.protocolEntryText}"/> <br/>
-				                <p></p>
-				               	<p:commandButton value="Eintrag speichern" actionListener="${plantBean.addProtocolEntry(plant)}" update="" styleClass="action-button" />
-				               	<p></p>
-								<p:dataTable id="protocolTable_#{plant.id}" value="#{plant.protocol.entries}" var="entry">
-									<p:column>
-				                        <f:facet name="header">
-				                            <h:outputText value="Timestamp" />
-				                        </f:facet>
-				                        <h:outputText value="#{entry.timestamp}" />
-				                    </p:column>
-				                    <p:column>
-				                        <f:facet name="header">
-				                            <h:outputText value="Eintrag" />
-				                        </f:facet>
-				                        <h:outputText value="#{entry.entryText}" />
-				                    </p:column>
-								</p:dataTable>
-							</p:dialog>
-							<p:dialog id="needDialog_#{plant.id}" header="Bedürfnisse für #{plant.name}" width="80%" height="80%" widgetVar="needDialog_#{plant.id}" modal="false" resizable="true">
-								<p:inputTextarea rows="2" cols="55" label="Bedürfnis" placeholder="Neues Bedürfnis" value="${plantBean.needTitle}"/> <br/>
-				                <div class="field col-12 md:col-4">
-					                <p:outputLabel for="timeDe" value="Datum und Uhrzeit"/> <br/>
-					                <p:datePicker id="timeDe" showTime="true" locale="de" pattern="dd.MM.yyyy"/>
-					            </div>
-				                <p></p>
-				               	<p:commandButton value="Bedürfnis speichern" actionListener="${plantBean.addNeed(plant)}" update="" styleClass="action-button" />
-				               	<p></p>
-				                <p:dataTable id="needTable_#{plant.id}" value="#{plant.needs.needs}" var="need">
-				                    <p:column>
-				                        <f:facet name="header">
-				                            <h:outputText value="Bedürfnis" />
-				                        </f:facet>
-				                        <h:outputText value="#{need.needTitle}" />
-				                    </p:column>
-				                    <p:column>
-				                        <f:facet name="header">
-				                            <h:outputText value="Erinnerung" />
-				                        </f:facet>
-				                        <h:outputText value="#{need.formatDateTime(need.reminder)}" />
-				                    </p:column>
-				                </p:dataTable>
-							</p:dialog>
-                    </div>
-                </div>
-            </p:carousel>
-        </p:tab>
-    </p:accordionPanel>
+
+	<p:accordionPanel id="plantPanel" multiple="true"
+		styleClass="panel-accordion">
+		<p:tab title="Alle Pflanzen">
+			<p:carousel value="#{plantBean.plantList}" var="plant"
+				numVisible="#{plantBean.plantList.size() >= 3 ? 3 : plantBean.plantList.size()}"
+				circular="true" styleClass="plant-carousel">
+				<div class="rounded-panel">
+					<div class="panel-content">
+						<p:panelGrid columns="1" style="margin-right: 10px;"
+							columnClasses="centered-content">
+							<p:graphicImage cache="false"
+                                        rendered="#{not empty plant.imageData}"
+                                        value="#{plantBean.image}" width="100" height="100" styleClass="circle-image" >
+                            	<f:param name="id" value="#{plant.id}"/>           
+                            </p:graphicImage>
+							<h:outputText value="#{plant.name}" />
+							<h:outputText value="#{plant.type}" />
+							<h:outputText value="#{plant.description}" />
+							<h:outputText value="#{plant.category.name}" />
+							<p:fieldset>
+								<p:commandLink
+									styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"
+									actionListener="#{plantBean.deletePlant(plant)}">
+									<h:outputText styleClass="ui-icon pi pi-trash" />
+								</p:commandLink>
+								<p:commandLink
+									styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"
+									oncomplete="PF('editPlantDialog_#{plant.id}').show();">
+									<h:outputText styleClass="ui-icon pi pi-pencil" />
+								</p:commandLink>
+								<p:commandLink
+									styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"
+									oncomplete="PF('protocolDialog_#{plant.id}').show();">
+									<h:outputText styleClass="ui-icon pi pi-book" />
+								</p:commandLink>
+								<p:commandLink
+									styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"
+									oncomplete="PF('needDialog_#{plant.id}').show();">
+									<h:outputText styleClass="ui-icon pi pi-heart" />
+								</p:commandLink>
+							</p:fieldset>
+						</p:panelGrid>
+						<p:dialog id="editPlantDialog_#{plant.id}"
+							header="Pflanze bearbeiten"
+							widgetVar="editPlantDialog_#{plant.id}" modal="false"
+							showEffect="fade" hideEffect="fade">
+							<div style="display: flex; flex-direction: column;">
+								<p:inputText label="Pflanzenname" placeholder="Neuer Name"
+									value="#{plant.name}" style="margin-bottom: 10px;" />
+								<p:inputText label="Pflanzentyp" placeholder="Neue Gattung"
+									value="#{plant.type}" style="margin-bottom: 10px;" />
+								<p:inputText label="Beschreibung"
+									placeholder="Neue Beschreibung" value="#{plant.description}"
+									style="margin-bottom: 10px;" />
+								<p:selectOneMenu label="Kategorie"
+									value="#{plantBean.selectedCategoryId}"
+									style="margin-bottom: 10px;">
+									<f:selectItems value="#{categoryBean.categoryList}"
+										var="category" itemLabel="#{category.name}"
+										itemValue="#{category.id}" />
+								</p:selectOneMenu>
+								<p:commandButton value="Speichern" styleClass="action-button"
+									actionListener="#{plantBean.updatePlant(plant)}"
+									oncomplete="PF('editPlantDialog').hide();"
+									style="margin-bottom: 10px;" />
+							</div>
+						</p:dialog>
+						<p:dialog id="protocolDialog_#{plant.id}"
+							header="Protokoll für #{plant.name}" width="80%" height="80%"
+							widgetVar="protocolDialog_#{plant.id}" modal="false"
+							resizable="true">
+							<p:inputTextarea rows="2" cols="55" label="Protokolleintrag"
+								placeholder="Neuer Eintrag"
+								value="${plantBean.protocolEntryText}" />
+							<br />
+							<p></p>
+							<p:commandButton value="Eintrag speichern"
+								actionListener="${plantBean.addProtocolEntry(plant)}" update=""
+								styleClass="action-button" />
+							<p></p>
+							<p:dataTable id="protocolTable_#{plant.id}"
+								value="#{plant.protocol.entries}" var="entry">
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Timestamp" />
+									</f:facet>
+									<h:outputText value="#{entry.timestamp}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Eintrag" />
+									</f:facet>
+									<h:outputText value="#{entry.entryText}" />
+								</p:column>
+							</p:dataTable>
+						</p:dialog>
+						<p:dialog id="needDialog_#{plant.id}"
+							header="Bedürfnisse für #{plant.name}" width="80%" height="80%"
+							widgetVar="needDialog_#{plant.id}" modal="false" resizable="true">
+							<p:inputTextarea rows="2" cols="55" label="Bedürfnis"
+								placeholder="Neues Bedürfnis" value="${plantBean.needTitle}" />
+							<br />
+							<div class="field col-12 md:col-4">
+								<p:outputLabel for="timeDe" value="Datum und Uhrzeit" />
+								<br />
+								<p:datePicker id="timeDe" showTime="true" locale="de"
+									pattern="dd.MM.yyyy" />
+							</div>
+							<p></p>
+							<p:commandButton value="Bedürfnis speichern"
+								actionListener="${plantBean.addNeed(plant)}" update=""
+								styleClass="action-button" />
+							<p></p>
+							<p:dataTable id="needTable_#{plant.id}"
+								value="#{plant.needs.needs}" var="need">
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Bedürfnis" />
+									</f:facet>
+									<h:outputText value="#{need.needTitle}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Erinnerung" />
+									</f:facet>
+									<h:outputText value="#{need.formatDateTime(need.reminder)}" />
+								</p:column>
+							</p:dataTable>
+						</p:dialog>
+					</div>
+				</div>
+			</p:carousel>
+		</p:tab>
+	</p:accordionPanel>
 
 	<p></p>
-	
-    <p:accordionPanel id="masterPanel" multiple="true" styleClass="panel-accordion">
-    	 <p:tab title="Detailansicht">
-    	 	<p:dataTable id="plantList" value="#{plantBean.plantList}" var="plant">
-    	 		<p:column>
-    	 			<f:facet name="header">
-    	 				<h:outputText value="Name"/>
-    	 			</f:facet>
-    	 			<p:inputText label="editedName" value="#{plant.name}" placeholder="Name"/>
-    	 		</p:column>
-    	 		<p:column>
-    	 			<f:facet name="header">
-    	 				<h:outputText value="Bezeichnung"/>
-    	 			</f:facet>
-    	 			<p:inputText label="editedType" value="#{plant.type}" placeholder="Typ"/>
-    	 		</p:column>
-    	 		<p:column>
-    	 			<f:facet name="header">
-    	 				<h:outputText value="Beschreibung"/>
-    	 			</f:facet>
-    	 			<p:inputText label="editedDescription" value="#{plant.description}" placeholder="Beschreibung"/>
-    	 		</p:column>
-    	 		<p:column>
-    	 			<f:facet name="header">
-    	 				<h:outputText value="Kategorie"/>
-    	 			</f:facet>
-    	 			<p:selectOneMenu label="Kategorie" value="#{plant.category.id}">
-		                <f:selectItems value="#{categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
-		            </p:selectOneMenu>
-    	 		</p:column>
-    	 		<p:column>
-    	 			<f:facet name="header">
-    	 				<h:outputText value="Aktionen"/>
-    	 			</f:facet>
-    	 			<p:commandButton value="Speichern" actionListener="#{plantBean.updatePlant(plant)}" update="plantList" styleClass="action-button" style="margin-right: 10px;"/>     	 			
-    	 			<p:commandButton value="Löschen" actionListener="#{plantBean.deletePlant(plant)}" update="plantList" styleClass="action-button" />
-    	 			<p></p>
-    	 			<p:commandButton value="Protokoll verwalten" onclick="PF('protocolDialogDetail_#{plant.id}').show();" styleClass="action-button"/>
-			            <p:dialog id="protocolDialogDetail_#{plant.id}" header="Protokoll für #{plant.name}" widgetVar="protocolDialogDetail_#{plant.id}" modal="true" resizable="false">
-			                <p:inputTextarea rows="2" cols="55" label="Protokolleintrag" placeholder="Neuer Eintrag" value="${plantBean.protocolEntryText}"/> <br/>
-			                <p></p>
-			               	<p:commandButton value="Eintrag speichern" actionListener="${plantBean.addProtocolEntry(plant)}" update=""/>
-			               	<p></p>
-			                <p:dataTable id="protocolTableDetail_#{plant.id}" value="#{plant.protocol.entries}" var="entry">
-			                    <p:column>
-			                        <f:facet name="header">
-			                            <h:outputText value="Timestamp" />
-			                        </f:facet>
-			                        <h:outputText value="#{entry.timestamp}" />
-			                    </p:column>
-			                    <p:column>
-			                        <f:facet name="header">
-			                            <h:outputText value="Eintrag" />
-			                        </f:facet>
-			                        <h:outputText value="#{entry.entryText}" />
-			                    </p:column>
-			                </p:dataTable>
-			            </p:dialog>
-			            <p></p>
-			            <p:commandButton value="Bedürfnisse verwalten" onclick="PF('needDialogDetail_#{plant.id}').show();" styleClass="action-button"/>
-				            <p:dialog id="needDialogDetail_#{plant.id}" header="Bedürfnisse für #{plant.name}" widgetVar="needDialogDetail_#{plant.id}" modal="true" resizable="false">
-				                <p:inputTextarea rows="6" cols="55" label="Bedürfnis" placeholder="Neues Bedürfnis" value="${plantBean.needTitle}"/> <br/>
-				                <div class="field col-12 md:col-4">
-					                <p:outputLabel for="timeDe" value="Datum und Uhrzeit"/>
-					                <p:datePicker id="timeDe" showTime="true" locale="de" pattern="dd.MM.yyyy"/>
-					            </div>
-				                <p></p>
-				               	<p:commandButton value="Bedürfnis speichern" actionListener="${plantBean.addNeed(plant)}" update=""/>
-				               	<p></p>
-				                <p:dataTable id="needTable_#{plant.id}" value="#{plant.needs.needs}" var="need">
-				                    <p:column>
-				                        <f:facet name="header">
-				                            <h:outputText value="Bedürfnis" />
-				                        </f:facet>
-				                        <h:outputText value="#{need.needTitle}" />
-				                    </p:column>
-				                    <p:column>
-				                        <f:facet name="header">
-				                            <h:outputText value="Erinnerung" />
-				                        </f:facet>
-				                        <h:outputText value="#{need.formatDateTime(need.reminder)}" />
-				                    </p:column>
-				                </p:dataTable>
-				            </p:dialog>
-	    	 		</p:column>
-	    	 	</p:dataTable>
-	    	 </p:tab>
-    </p:accordionPanel>
 
-    <h:body>
-        <p:dialog id="plantDialog" header="Neue Pflanze" widgetVar="plantDialog" modal="true" 
-                  showEffect="fade" hideEffect="fade" style="background-color: #e6ddc7; min-width: 400px;">
-            <div style="display: flex; flex-direction: column;">
-                <p:fileUpload label="Bild" fileUploadListener="#{plantBean.handleImageUpload}" mode="advanced" dragDropSupport="false" styleClass="action-button" style="margin-bottom: 10px;" />
-                <p:inputText label="Pflanzenname" placeholder="Pflanzenname" value="${plantBean.newPlant.name}" style="margin-bottom: 10px;"/>
-                <p:inputText label="Pflanzentyp" placeholder="Pflanzentyp" value="${plantBean.newPlant.type}" style="margin-bottom: 10px;"/>
-                <p:inputText label="Beschreibung" placeholder="Beschreibung" value="${plantBean.newPlant.description}" style="margin-bottom: 10px;"/>
-                <p:selectOneMenu label="Kategorie" value="${plantBean.selectedCategoryId}" style="margin-bottom: 10px;">
-                    <f:selectItems value="${categoryBean.categoryList}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
-                </p:selectOneMenu>
-                <p:commandButton value="Speichern" actionListener="${plantBean.save}" styleClass="action-button" 
-                                 update="messages,plantPanel,categoryPanel" oncomplete="PF('plantDialog').hide();" style="margin-bottom: 10px;"/>            
-            </div>
-        </p:dialog>
+	<p:accordionPanel id="masterPanel" multiple="true"
+		styleClass="panel-accordion">
+		<p:tab title="Detailansicht">
+			<p:dataTable id="plantList" value="#{plantBean.plantList}"
+				var="plant">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Name" />
+					</f:facet>
+					<p:inputText label="editedName" value="#{plant.name}"
+						placeholder="Name" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Bezeichnung" />
+					</f:facet>
+					<p:inputText label="editedType" value="#{plant.type}"
+						placeholder="Typ" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Beschreibung" />
+					</f:facet>
+					<p:inputText label="editedDescription" value="#{plant.description}"
+						placeholder="Beschreibung" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Kategorie" />
+					</f:facet>
+					<p:selectOneMenu label="Kategorie" value="#{plant.category.id}">
+						<f:selectItems value="#{categoryBean.categoryList}" var="category"
+							itemLabel="#{category.name}" itemValue="#{category.id}" />
+					</p:selectOneMenu>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Aktionen" />
+					</f:facet>
+					<p:commandButton value="Speichern"
+						actionListener="#{plantBean.updatePlant(plant)}"
+						update="plantList" styleClass="action-button"
+						style="margin-right: 10px;" />
+					<p:commandButton value="Löschen"
+						actionListener="#{plantBean.deletePlant(plant)}"
+						update="plantList" styleClass="action-button" />
+					<p></p>
+					<p:commandButton value="Protokoll verwalten"
+						onclick="PF('protocolDialogDetail_#{plant.id}').show();"
+						styleClass="action-button" />
+					<p:dialog id="protocolDialogDetail_#{plant.id}"
+						header="Protokoll für #{plant.name}"
+						widgetVar="protocolDialogDetail_#{plant.id}" modal="true"
+						resizable="false">
+						<p:inputTextarea rows="2" cols="55" label="Protokolleintrag"
+							placeholder="Neuer Eintrag"
+							value="${plantBean.protocolEntryText}" />
+						<br />
+						<p></p>
+						<p:commandButton value="Eintrag speichern"
+							actionListener="${plantBean.addProtocolEntry(plant)}" update="" />
+						<p></p>
+						<p:dataTable id="protocolTableDetail_#{plant.id}"
+							value="#{plant.protocol.entries}" var="entry">
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Timestamp" />
+								</f:facet>
+								<h:outputText value="#{entry.timestamp}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Eintrag" />
+								</f:facet>
+								<h:outputText value="#{entry.entryText}" />
+							</p:column>
+						</p:dataTable>
+					</p:dialog>
+					<p></p>
+					<p:commandButton value="Bedürfnisse verwalten"
+						onclick="PF('needDialogDetail_#{plant.id}').show();"
+						styleClass="action-button" />
+					<p:dialog id="needDialogDetail_#{plant.id}"
+						header="Bedürfnisse für #{plant.name}"
+						widgetVar="needDialogDetail_#{plant.id}" modal="true"
+						resizable="false">
+						<p:inputTextarea rows="6" cols="55" label="Bedürfnis"
+							placeholder="Neues Bedürfnis" value="${plantBean.needTitle}" />
+						<br />
+						<div class="field col-12 md:col-4">
+							<p:outputLabel for="timeDe" value="Datum und Uhrzeit" />
+							<p:datePicker id="timeDe" showTime="true" locale="de"
+								pattern="dd.MM.yyyy" />
+						</div>
+						<p></p>
+						<p:commandButton value="Bedürfnis speichern"
+							actionListener="${plantBean.addNeed(plant)}" update="" />
+						<p></p>
+						<p:dataTable id="needTable_#{plant.id}"
+							value="#{plant.needs.needs}" var="need">
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Bedürfnis" />
+								</f:facet>
+								<h:outputText value="#{need.needTitle}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Erinnerung" />
+								</f:facet>
+								<h:outputText value="#{need.formatDateTime(need.reminder)}" />
+							</p:column>
+						</p:dataTable>
+					</p:dialog>
+				</p:column>
+			</p:dataTable>
+		</p:tab>
+	</p:accordionPanel>
 
-        <p:dialog id="categoryDialog" header="Kategorie oder Ort anlegen" widgetVar="categoryDialog" modal="true" resizable="false">
-			<p:inputText label="Kategoriename" placeholder="Kategorie oder Ort" value="${categoryBean.newCategory.name}"/>
-			<p:commandButton value="Speichern" actionListener="${categoryBean.save}" update="messages,plantPanel,categoryPanel" styleClass="action-button" style="margin-left: 10px;" oncomplete="PF('categoryDialog').hide();" />
-		</p:dialog>            
-    </h:body>
+	<h:body>
+		<p:dialog id="plantDialog" header="Neue Pflanze"
+			widgetVar="plantDialog" modal="true" showEffect="fade"
+			hideEffect="fade"
+			style="background-color: #e6ddc7; min-width: 400px;">
+			<div style="display: flex; flex-direction: column;">
+				<h:form>
+					<p:growl id="messages" showDetail="true" />
 
-    <h:head>
-        <style>
-            .header {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                background-color: #e6ddc7;
-                width: 100%;
-            }
-            .logo {
-                display: flex;
-                align-items: center;
-            }
-            .clock {
-                font-family: Arial, sans-serif;
-                padding-right: 25px;
-            }
-            .buttonbar {
-                background-color: #e6ddc7;
-                width: 100%;
-                margin-top: -25px;
-                padding: 10px;
-            }
-            .action-buttons {
-                display: flex;
-                gap: 10px;
-            }
-            .action-button {
-                background-color: #91b398 !important;
-                border: none;
-                border-color: #91b398;
-                color: #fff;
-                box-shadow: none !important;
-            }
+					<p:fileUpload mode="advanced" multiple="false" sizeLimit="10240000"
+						allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+						invalidSizeMessage="Maximum file size allowed is 100 KB"
+						invalidFileMessage="only gif | jpg | jpeg | png is allowed"
+						update="messages" listener="#{plantBean.handleImageUpload}" />
+				</h:form>
+				<p:inputText label="Pflanzenname" placeholder="Pflanzenname"
+					value="#{plantBean.newPlant.name}" style="margin-bottom: 10px;" />
+				<p:inputText label="Pflanzentyp" placeholder="Pflanzentyp"
+					value="#{plantBean.newPlant.type}" style="margin-bottom: 10px;" />
+				<p:inputText label="Beschreibung" placeholder="Beschreibung"
+					value="#{plantBean.newPlant.description}"
+					style="margin-bottom: 10px;" />
+				<p:selectOneMenu label="Kategorie"
+					value="#{plantBean.selectedCategoryId}"
+					style="margin-bottom: 10px;">
+					<f:selectItems value="#{categoryBean.categoryList}" var="category"
+						itemLabel="#{category.name}" itemValue="#{category.id}" />
+				</p:selectOneMenu>
+				<p:commandButton value="Speichern"
+					actionListener="#{plantBean.save}" styleClass="action-button"
+					oncomplete="PF('plantDialog').hide();" style="margin-bottom: 10px;" />
 
-            .action-button:focus {
-                outline: none !important;
-            }
+			</div>
+		</p:dialog>
 
-            .action-button:focus-visible {
-                outline: none !important;
-            }
+		<p:dialog id="categoryDialog" header="Kategorie oder Ort anlegen"
+			widgetVar="categoryDialog" modal="true" resizable="false">
+			<p:inputText label="Kategoriename" placeholder="Kategorie oder Ort"
+				value="${categoryBean.newCategory.name}" />
+			<p:commandButton value="Speichern"
+				actionListener="${categoryBean.save}" styleClass="action-button"
+				style="margin-left: 10px;" oncomplete="PF('categoryDialog').hide();" />
+		</p:dialog>
+	</h:body>
 
-            .action-button:hover {
-                background-color: #7b9a80 !important;
-            }
-            .ui-accordion .ui-accordion-header {
-                background-color: #7b9a80 !important;
-                color: #fff;
-                border: none !important;
-            }
-            .ui-accordion .ui-accordion-toggle-icon {
-                color: #fff !important;
-            }
-            .ui-accordion .ui-accordion-content {
-                background-color: #91b398 !important;
-                color: #fff;
-                border: none !important;
-            }
-            .ui-accordion .ui-accordion-header .ui-accordion-header-link {
-                color: #fff !important;
-            }
-            .rounded-panel {
-                border-radius: 10px;
-                overflow: hidden;
-            }
-            .panel-content {
-                padding: 10px;
-                background-color: #ffffff;
-                border-radius: 10px;
-                text-align: center;
-                background-color: #b4ccbc;
-            }    
-            .panel-accordion .ui-accordion-content {
-                padding: 0;
-            }    
-            .panel-accordion .ui-accordion-content .rounded-panel {
-                margin: 10px;
-            }    
-            .centered-content {
-                text-align: center;
-            }           
-            .circle-image {
-                border-radius: 50%;
-            }           
-            .panel-content table {
-                width: 100%;
-            }
-            .ui-dialog {
-                min-width: 500px !important;
-            }
-        </style>
-    </h:head>
+	<h:head>
+		<style>
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: #e6ddc7;
+	width: 100%;
+}
+
+.logo {
+	display: flex;
+	align-items: center;
+}
+
+.clock {
+	font-family: Arial, sans-serif;
+	padding-right: 25px;
+}
+
+.buttonbar {
+	background-color: #e6ddc7;
+	width: 100%;
+	margin-top: -25px;
+	padding: 10px;
+}
+
+.action-buttons {
+	display: flex;
+	gap: 10px;
+}
+
+.action-button {
+	background-color: #91b398 !important;
+	border: none;
+	border-color: #91b398;
+	color: #fff;
+	box-shadow: none !important;
+}
+
+.action-button:focus {
+	outline: none !important;
+}
+
+.action-button:focus-visible {
+	outline: none !important;
+}
+
+.action-button:hover {
+	background-color: #7b9a80 !important;
+}
+
+.ui-accordion .ui-accordion-header {
+	background-color: #7b9a80 !important;
+	color: #fff;
+	border: none !important;
+}
+
+.ui-accordion .ui-accordion-toggle-icon {
+	color: #fff !important;
+}
+
+.ui-accordion .ui-accordion-content {
+	background-color: #91b398 !important;
+	color: #fff;
+	border: none !important;
+}
+
+.ui-accordion .ui-accordion-header .ui-accordion-header-link {
+	color: #fff !important;
+}
+
+.rounded-panel {
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.panel-content {
+	padding: 10px;
+	background-color: #ffffff;
+	border-radius: 10px;
+	text-align: center;
+	background-color: #b4ccbc;
+}
+
+.panel-accordion .ui-accordion-content {
+	padding: 0;
+}
+
+.panel-accordion .ui-accordion-content .rounded-panel {
+	margin: 10px;
+}
+
+.centered-content {
+	text-align: center;
+}
+
+.circle-image {
+	border-radius: 50%;
+}
+
+.panel-content table {
+	width: 100%;
+}
+
+.ui-dialog {
+	min-width: 500px !important;
+}
+</style>
+	</h:head>
 
 </ui:composition>

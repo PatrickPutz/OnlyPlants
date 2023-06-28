@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+                
+                
+                <div class="card">
+    <h:form>
+        
+
+        <p:fileUpload mode="advanced"
+                      multiple="false"
+                      sizeLimit="102400" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                      invalidSizeMessage="Maximum file size allowed is 100 KB"
+                      invalidFileMessage="only gif | jpg | jpeg | png is allowed"
+                      update="messages"
+                      listener="#{plantBean.handleImageUpload}"/>
+    </h:form>
+</div>
+</ui:composition>

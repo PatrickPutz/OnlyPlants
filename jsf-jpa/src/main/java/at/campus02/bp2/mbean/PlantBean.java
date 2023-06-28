@@ -1,5 +1,6 @@
 package at.campus02.bp2.mbean;
 
+import java.io.ByteArrayInputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +11,14 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.file.UploadedFile;
 
 import at.campus02.bp2.model.Category;
 import at.campus02.bp2.model.Plant;
@@ -35,6 +39,7 @@ public class PlantBean {
     private Integer selectedCategoryId;
     private Integer selectedPlantId;
     private String protocolEntryText;
+    private UploadedFile originalImageFile;
     private String needTitle;
     private LocalDateTime reminder;
 
@@ -44,7 +49,8 @@ public class PlantBean {
 
     public void handleImageUpload(FileUploadEvent event) {
         UploadedFile uploadedFile = (UploadedFile) event.getFile();
-        newPlant.setImageData(uploadedFile.getContents());
+        newPlant.setImageData(uploadedFile.getContent());
+        
     }
     
     // Create a ProtocolEntry
@@ -55,6 +61,46 @@ public class PlantBean {
         entry.setTimestamp(LocalDateTime.now());
         return entry;
     }
+    
+    public StreamedContent getImage() {
+    	FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            return new DefaultStreamedContent();
+        }
+        else {
+        	Plant plant = null;
+            String id = context.getExternalContext().getRequestParameterMap().get("id");
+            for(int i = 0; i<plantList.size();i++)
+            {
+            	if(Integer.parseInt(id) == plantList.get(i).getId())
+            	{
+            		plant = plantList.get(i);
+            		break;
+            	}
+            }
+            Plant plant2 = plant;
+            return DefaultStreamedContent.builder()
+                    .contentType("image/png")
+                    .stream(() -> {
+                        if (plant2.getImageData() == null
+                                || plant2.getImageData().length == 0)
+                        {
+                        	System.out.println("asdasdasd");
+                            return null;
+                        }
+
+                        try {
+                            return new ByteArrayInputStream(plant2.getImageData());
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                            return null;
+                        }
+                    })
+                    .build();
+        }
+    }
+    
     
     // Add the ProtocolEntry to the Protocol
     
