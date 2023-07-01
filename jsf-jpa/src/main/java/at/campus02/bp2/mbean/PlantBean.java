@@ -70,9 +70,10 @@ public class PlantBean {
         else {
         	Plant plant = null;
             String id = context.getExternalContext().getRequestParameterMap().get("id");
+            int pictureID = Integer.parseInt(id);
             for(int i = 0; i<plantList.size();i++)
             {
-            	if(Integer.parseInt(id) == plantList.get(i).getId())
+            	if(pictureID == plantList.get(i).getId())
             	{
             		plant = plantList.get(i);
             		break;
